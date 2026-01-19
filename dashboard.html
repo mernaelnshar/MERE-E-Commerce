@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | MERE E-Commerce</title>
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+
+<body>
+
+    <!-- Navbar ثابت فوق -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="assets/images/logos/logo.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="user-info">
+            <div class="userName"><span>Alex Rivera</span></div>
+            <div class="userType"><span>ADMIN</span></div>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="dashboard.html">
+                        <img src="assets/images/icons/menu.png" alt="Dashboard Icon" class="menu-icon">
+                        Dashboard</a>
+                </li>
+                <li><a href="product-management.html">
+                        <img src="assets/images/icons/archive.png" alt="Product Icon" class="menu-icon">
+                        Product Management</a>
+                </li>
+                <li><a href="category-management.html">
+                        <img src="assets/images/icons/shapes.png" alt="Category Icon" class="menu-icon">
+                        Category Management</a>
+                </li>
+            </ul>
+            <div class="signout">
+                <button>Sign Out</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Store Analytics</h1>
+                    <p>Real-time summary of your marketplace operations.</p>
+                </div>
+            </div>
+
+            <div class="stats-cards">
+                <div class="card">
+                    <img src="assets/images/icons/done.png" alt="">
+                    <h3>Total Products</h3>
+                    <p>1,240</p>
+                </div>
+
+                <div class="card">
+                    <img src="assets/images/icons/apps.png" alt="">
+                    <h3>Total Categories</h3>
+                    <p>45</p>
+                </div>
+
+                <div class="card">
+                    <img src="assets/images/icons/file.png" alt="">
+                    <h3>Pending Orders</h3>
+                    <p>6</p>
+                </div>
+            </div>
+
+
+            <div class="orders-table">
+                <div class="table-header">
+                    <h3>Pending Orders Queue</h3>
+                    <a id="viewMoreBtn">View all orders</a>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>CUSTOMER</th>
+                            <th>AMOUNT</th>
+                            <th>DATE</th>
+                            <th>STATUS</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ORD-9012</td>
+                            <td>Jane Doe</td>
+                            <td>$299.00</td>
+                            <td>Jan 18, 2:15 PM</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="confirm">Confirm</button>
+                                <button class="reject">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-8994</td>
+                            <td>Marcus Smith</td>
+                            <td>$1,240.50</td>
+                            <td>Jan 18, 11:30 AM</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="confirm">Confirm</button>
+                                <button class="reject">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-8951</td>
+                            <td>Elena Lopez</td>
+                            <td>$45.00</td>
+                            <td>Jan 17, 5:45 PM</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="confirm">Confirm</button>
+                                <button class="reject">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-8920</td>
+                            <td>John Smith</td>
+                            <td>$799.00</td>
+                            <td>Jan 17, 12:30 PM</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="confirm">Confirm</button>
+                                <button class="reject">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-8899</td>
+                            <td>Mary Johnson</td>
+                            <td>$520.00</td>
+                            <td>Jan 16, 9:45 AM</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="confirm">Confirm</button>
+                                <button class="reject">Reject</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-8877</td>
+                            <td>Peter Parker</td>
+                            <td>$150.00</td>
+                            <td>Jan 16, 8:30 AM</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="confirm">Confirm</button>
+                                <button class="reject">Reject</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Popup -->
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <p id="popupText"></p>
+
+                    <textarea name="rejectReason" id="rejectReason"  placeholder="Enter rejection reason"></textarea>
+
+                    <div class="actions">
+                        <button id="okBtn">OK</button>
+                        <button onclick="closePopup()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+    </div>
+
+    <script src="/assets/js/dashboard.js"></script>
+</body>
+
+</html>
