@@ -1,0 +1,78 @@
+.products-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.products-table th,
+.products-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.products-table img {
+    width: 50px;
+}
+
+/* Actions */
+.actions i {
+    cursor: pointer;
+    margin: 0 6px;
+    font-size: 18px;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: #0000005a;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: #fff;
+    width: 360px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#saveProduct {
+    background: #0b7974;
+    color: #fff;
+}
+
+#cancelProduct {
+    background: #dc3545;
+    color: #fff;
+}
