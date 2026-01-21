@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Boutique Store – Shopping Cart</title>
+    <link rel="stylesheet" href="../Shop Page/shopStyle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar">
+      <div class="nav-left">
+        <div class="logo">
+          MERE E-Commerce
+          <img src="../../assets/logo.png" alt="" />
+        </div>
+        <nav>
+          <a href="#">HOME</a>
+          <a href="../Wish List/wishPage.html">WISH LIST</a>
+          <a href="../Shop Page/shop.html" class="active">SHOP CART</a>
+          <a href="../Order Page/order.html">ORDER</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ================= BREADCRUMB ================= -->
+    <section class="breadcrumb">Home › <strong>Shopping Cart</strong></section>
+
+    <!-- ================= MAIN ================= -->
+    <main class="container">
+      <section class="cart-section">
+        <h1>Shopping Cart</h1>
+        <br />
+
+        <!-- CART ITEM -->
+        <div class="cart-item">
+          <img src="../../assets/t-shirt.png" alt="" />
+          <div class="item-info">
+            <h3>Organic Cotton Tee</h3>
+            <p>Size: Medium | Color: Arctic White</p>
+            <div class="qty">
+              <button class="minus">-</button><span>1</span
+              ><button class="plus">+</button>
+            </div>
+          </div>
+          <div class="price">$45.00</div>
+          <div class="remove">🗑 Remove</div>
+        </div>
+
+        <div class="cart-item">
+          <img src="../../assets/lamp.png" alt="" />
+          <div class="item-info">
+            <h3>Minimalist Desk Lamp</h3>
+            <p>Color: Matte Black | Material: Steel</p>
+            <div class="qty">
+              <button class="minus">-</button><span>1</span
+              ><button class="plus">+</button>
+            </div>
+          </div>
+          <div class="price">$129.00</div>
+          <div class="remove">🗑 Remove</div>
+        </div>
+
+        <div class="cart-item">
+          <img src="../../assets/beigeShoe.png" alt="" />
+          <div class="item-info">
+            <h3>Urban Classic Sneakers</h3>
+            <p>Size: 42 | Color: Off-white</p>
+            <div class="qty">
+              <button class="minus">-</button><span>1</span
+              ><button class="plus">+</button>
+            </div>
+          </div>
+          <div class="price">$85.00</div>
+          <div class="remove">🗑 Remove</div>
+        </div>
+      </section>
+
+      <!-- ================= ORDER SUMMARY ================= -->
+      <aside class="summary">
+        <h2>Order Summary</h2>
+        <div class="row"><span>Subtotal</span><span>$259.00</span></div>
+        <div class="row">
+          <span>Estimated Shipping</span><span class="green">Free</span>
+        </div>
+        <div class="row"><span>Tax</span><span>$20.72</span></div>
+        <hr />
+        <div class="total">
+          <span>Total</span>
+          <span>$279.72</span>
+        </div>
+        <!-- go to another page -->
+        <button class="checkout">Proceed to Checkout →</button>
+
+        <p class="express">OR EXPRESS CHECKOUT</p>
+        <button class="paypal">PayPal</button>
+
+        <div class="trust">
+          <span>🔒 Secure SSL</span>
+          <span>✔ Trusted</span>
+          <span>🚚 Fast Delivery</span>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ================= RECOMMENDATIONS ================= -->
+    <section class="recommend">
+      <h2>You might also like</h2>
+      <br />
+      <br />
+      <div class="cards">
+        <div class="card">
+          <!-- islam's page ()-->
+          <a href="#">
+            <img src="../../assets/redShoe.png" />
+          </a>
+          <h4>Pro Runner X1</h4>
+          <p>$120.00</p>
+        </div>
+        <div class="card">
+          <a href="#">
+            <img src="../../assets/glasses.png" />
+          </a>
+          <h4>Classic Aviators</h4>
+          <p>$180.00</p>
+        </div>
+        <div class="card">
+          <a href="#">
+            <img src="../../assets/smartWatch.png" />
+          </a>
+          <h4>Zenith Smartwatch</h4>
+          <p>$299.00</p>
+        </div>
+        <div class="card">
+          <a href="#">
+            <img src="../../assets/headphone.png" />
+          </a>
+          <h4>Acoustics Pro Headset</h4>
+          <p>$250.00</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>© 2024 All rights reserved by your store</footer>
+    <script src="../Shop Page/script.js"></script>
+  </body>
+</html>
