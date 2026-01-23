@@ -167,7 +167,7 @@ function renderProducts(products,...pass) {
     productDiv.appendChild(addToCartDiv);
     productDiv.appendChild(addToWishListDiv);
     title.addEventListener('click',function(){
-        location.assign(`./product-details.html/${product.id}`)
+        location.assign(`product-details.html?id=${product.id}`)
     })
     section.appendChild(productDiv);
   });
@@ -360,6 +360,7 @@ onAuthStateChanged(auth, async (user) => {
     setupDone = true;
   }
 });
+
 
 
 
