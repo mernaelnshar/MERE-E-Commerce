@@ -1,50 +1,249 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <title>Go Shop Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9f9;
+        }
+
+        .navbar {
+            background-color: #ffffff; 
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: relative; 
+        }
+
+        .logo-img {
+            height:40px ; 
+            width: auto;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #555555; 
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+            color: #0b7974; 
+            transform: translateY(-2px);
+        }
+
+        .logout-btn {
+            background-color: transparent;
+            border: 2px solid #777;
+            color: #555; 
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #0b7974; 
+            color: #fff; 
+            border-color: #0b7974;
+        }
+
+            
+        .footer-dark {
+            background-color: #1a1a1a;
+            color: #b0b0b0;
+            padding-top: 50px;
+            font-size: 14px;
+            direction: ltr; 
+            text-align: left; 
+            border-top: 5px solid #0b7974;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 0 20px 40px;
+            gap: 30px;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        
+        .footer-col h4, .footer-logo {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            text-transform: uppercase; 
+        }
+
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0; 
+            width: 40px;
+            height: 2px;
+            background-color: #0b7974;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .footer-desc {
+            line-height: 1.6;
+            max-width: 300px;
+        }
+
+        
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #b0b0b0;
+            transition: 0.3s;
+            display: inline-block;
+        }
 
 
+        .footer-links a:hover {
+            color: #fff;
+            transform: translateX(5px); 
+            padding-left: 5px;
+            border-left: 2px solid #0b7974; 
+        }
 
+        .social-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
 
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+            transition: 0.4s;
+            border: 1px solid #444;
+        }
+        .contact-info a {
+            text-decoration: none;
+            color: #b0b0b0;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .social-btn.facebook:hover { background-color: #1877f2; border-color: #1877f2; }
+        .social-btn.instagram:hover { background-color: #e4405f; border-color: #e4405f; }
+        .social-btn.whatsapp:hover { background-color: #25d366; border-color: #25d366; }
+        
+        .social-btn:hover {
+            transform: rotate(360deg);
+        }
+
+        .contact-info {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-bottom {
+            background-color: #111;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+        
+        .footer-bottom p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-col h4::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .social-row {
+                justify-content: center;
+            }
+            .contact-info {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+
+    </style>
     <link rel="stylesheet" href="./css/products.css">
-    <title>Products</title>
 </head>
 <body>
     <div class="page">
-        <header class="header">
-            <div class="logo">
-                <img src="" alt="logo">
-                <h2>E-Commerce</h2>
-            </div>
-            <nav class="nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Item 1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Item 2</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Item 1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Item 2</a>
-                </li>
-            </nav>
-
-            <div class="search">
-                <i class="fas fa-search"></i>
-                <input type="text" id="Search" placeholder="        Search for unqiue pices ...">
-
-            </div>
-
-            <div class="login">
-                <a href="#"><i class="far fa-heart"></i></a>
-                <a href="#"><i class="fas fa-cart-shopping"></i></a>
-                <a href="#"><i class="fa-solid fa-user"></i></a>
-            </div>
-        </header>
         <div class="bridcumb">
             <div class="passlink">
                 <div class="pass">
@@ -96,9 +295,79 @@
             </section>
         </div>
 
-        <footer>footer</footer>
-    </div>
 
     <script type="module" src="./js/products.js"></script>
+<body>
+
+    <nav class="navbar">
+        <img src="assets/images/logos/logo.png" alt="Go Shop Logo" class="logo-img">
+
+        <ul class="nav-links">
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-store"></i> Shop
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-heart"></i> Wishlist
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-box-open"></i> Orders
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa-solid fa-cart-shopping"></i>Carts
+                </a>
+            </li>
+        </ul>
+
+        <button class="logout-btn" onclick="window.location.href='login.html'">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </button>
+    </nav>
+<footer class="footer-dark">
+        <div class="footer-container">
+            
+            <div class="footer-col">
+                <h3 class="footer-logo">Go Shop</h3>
+                <p class="footer-desc">
+                    Your premier destination for modern shopping. We offer the best products at the best prices with exceptional delivery service.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Connect With Us</h4>
+                <div class="social-row">
+                    <a href="#" class="social-btn facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-btn instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+                <p class="contact-info">
+                    <a href="mail to: support@goshop.com" class="contact-info"> <i class="fa-solid fa-envelope"></i> support@goshop.com</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Go Shop. All rights reserved.</p>
+        </div>
+    </footer>
+
+
 </body>
 </html>
+
