@@ -1,40 +1,64 @@
-const totalEl = document.getElementById("total");
-const countEl = document.getElementById("count");
+// ===== FIREBASE =====
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-let total = 0;
-let count = 0;
+// Firebase config
+const firebaseConfig = {
+  apiKey: "AIzaSyDZmtAma7FFyJVEaHNbRk1ovmqwCO5m1p0",
+  authDomain: "goshop-e43f1.firebaseapp.com",
+  projectId: "goshop-e43f1",
+  storageBucket: "goshop-e43f1.firebasestorage.app",
+  messagingSenderId: "788272001640",
+  appId: "1:788272001640:web:d0c5adf18daab3ee8e81dd",
+  measurementId: "G-K8ME02DXJW",
+};
 
-document.querySelectorAll(".card").forEach(card => {
-  const addBtn = card.querySelector(".add-btn");
-  const removeBtn = card.querySelector(".remove-btn");
-  const price = Number(card.querySelector(".price").dataset.price);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  addBtn.addEventListener("click", () => {
-    if (addBtn.classList.contains("added")) return;
+// ===== SELECT CONTAINER =====
+const wishlistContainer = document.getElementById("wishlistContainer");
 
-    total += price;
-    count++;
+// ===== FETCH ALL PRODUCTS IN WISHLIST FOR USER =====
+async function fetchWishlist(userId) {
+  wishlistContainer.innerHTML = "<p>Loading wishlist...</p>";
 
-    updateUI();
+  try {
+    // احنا هنا بنجيب كل المستندات من subcollection ProductWishlist
+    const wishlistColRef = collection(db, "wishlists", userId, "ProductWishlist");
+    const wishlistSnapshot = await getDocs(wishlistColRef);
 
-    addBtn.textContent = "ADDED";
-    addBtn.classList.add("added");
-  });
+    wishlistContainer.innerHTML = "";
 
-  removeBtn.addEventListener("click", () => {
-    if (!addBtn.classList.contains("added")) return;
+    if (wishlistSnapshot.empty) {
+      wishlistContainer.innerHTML = "<p>Your wishlist is empty.</p>";
+      return;
+    }
 
-    total -= price;
-    count--;
+    // لكل منتج في الـ subcollection نعرضه
+    wishlistSnapshot.forEach((docSnap) => {
+      const prodData = docSnap.data();
 
-    updateUI();
+      const div = document.createElement("div");
+      div.className = "wishlist-item";
+      div.innerHTML = `
+        <h3>${prodData.title}</h3>
+        <p>Price: $${prodData.price}</p>
+        <br>
+      `;
 
-    addBtn.textContent = "ADD TO BAG";
-    addBtn.classList.remove("added");
-  });
-});
+      wishlistContainer.appendChild(div);
+    });
 
-function updateUI() {
-  totalEl.textContent = `$${total.toFixed(2)}`;
-  countEl.textContent = count;
+  } catch (err) {
+    console.error("Error fetching wishlist:", err);
+    wishlistContainer.innerHTML = "<p>Failed to load wishlist.</p>";
+  }
 }
+
+// ===== INIT =====
+fetchWishlist("1"); // ضع هنا الـ userId
