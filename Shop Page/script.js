@@ -1,61 +1,174 @@
-// ====== Quantity Controls ======
-const plusButtons = document.getElementsByClassName("plus");
-const minusButtons = document.getElementsByClassName("minus");
+// ===== PRODUCTS =====
+const products = [
+  {
+    id: "p1",
+    name: "Organic Cotton Tee",
+    price: 45.0,
+    image: "../../assets/t-shirt.png",
+    options: { size: "M", color: "Arctic White" },
+  },
+  {
+    id: "p2",
+    name: "Minimalist Desk Lamp",
+    price: 129.0,
+    image: "../../assets/lamp.png",
+    options: { size: "32", color: "Matte Black" },
+  },
+  {
+    id: "p3",
+    name: "Urban Classic Sneakers",
+    price: 85.0,
+    image: "../../assets/beigeShoe.png",
+    options: { size: "L", color: "Off-white" },
+  },
+];
 
-// لكل زر + اضغط عليه يزيد العدد
-for (let i = 0; i < plusButtons.length; i++) {
-  plusButtons[i].onclick = function () {
-    const qtySpan = this.previousElementSibling; // الرقم بجانب الزر
-    let qty = parseInt(qtySpan.innerText);
-    qty++;
-    qtySpan.innerText = qty;
-    updateSummary(); // تحديث الملخص بعد أي تغيير
-  };
+// ===== FIREBASE =====
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDZmtAma7FFyJVEaHNbRk1ovmqwCO5m1p0",
+  authDomain: "goshop-e43f1.firebaseapp.com",
+  projectId: "goshop-e43f1",
+  storageBucket: "goshop-e43f1.firebasestorage.app",
+  messagingSenderId: "788272001640",
+  appId: "1:788272001640:web:d0c5adf18daab3ee8e81dd",
+  measurementId: "G-K8ME02DXJW",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ===== LOCAL STORAGE =====
+function getCart() {
+  return JSON.parse(localStorage.getItem("cart")) || [];
 }
 
-// لكل زر - اضغط عليه ينقص العدد (لا يقل عن 1)
-for (let i = 0; i < minusButtons.length; i++) {
-  minusButtons[i].onclick = function () {
-    const qtySpan = this.nextElementSibling; // الرقم بجانب الزر
-    let qty = parseInt(qtySpan.innerText);
-    if (qty > 1) {
-      qty--;
-      qtySpan.innerText = qty;
-      updateSummary(); // تحديث الملخص بعد أي تغيير
+function saveCart(cart) {
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// ===== RENDER CART =====
+function renderCart() {
+  const container = document.getElementById("cartItems");
+  const emptyCartMsg = document.getElementById("emptyCart");
+  container.innerHTML = "";
+
+  const cart = getCart();
+
+  products.forEach((prod) => {
+    let cartItem = cart.find((p) => p.id === prod.id);
+    let qty = cartItem ? cartItem.qty : 0;
+
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <img src="${prod.image}" alt="${prod.name}" />
+      <div class="item-info">
+        <h3>${prod.name}</h3>
+        <p>${prod.options?.size ? `Size: ${prod.options.size} |` : ""} ${prod.options?.color ? `Color: ${prod.options.color}` : ""}</p>
+        <div class="qty">
+          <button class="minus" data-id="${prod.id}">-</button>
+          <span>${qty}</span>
+          <button class="plus" data-id="${prod.id}">+</button>
+        </div>
+      </div>
+      <div class="price">$${(prod.price * qty).toFixed(2)}</div>
+      ${qty > 0 ? `<div class="remove" data-id="${prod.id}">🗑 Remove</div>` : ""}
+    `;
+    container.appendChild(div);
+  });
+
+  const nonEmptyCart = cart.filter((item) => item.qty > 0);
+  emptyCartMsg.style.display = nonEmptyCart.length === 0 ? "block" : "none";
+  updateSummary(nonEmptyCart);
+}
+
+// ===== UPDATE SUMMARY =====
+function updateSummary(cartArray) {
+  const subtotal = cartArray.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0,
+  );
+  const tax = subtotal * 0.08;
+  const total = subtotal + tax;
+
+  document.getElementById("subtotal").textContent = `$${subtotal.toFixed(2)}`;
+  document.getElementById("tax").textContent = `$${tax.toFixed(2)}`;
+  document.getElementById("total").textContent = `$${total.toFixed(2)}`;
+}
+
+// ===== HANDLE BUTTONS =====
+document.addEventListener("click", (e) => {
+  if (!e.target.dataset.id) return;
+  const id = e.target.dataset.id;
+  let cart = getCart();
+  let item = cart.find((p) => p.id === id);
+
+  if (e.target.classList.contains("plus")) {
+    if (!item) {
+      const prod = products.find((p) => p.id === id);
+      item = { ...prod, qty: 1 };
+      cart.push(item);
+    } else {
+      item.qty += 1;
     }
-  };
-}
-
-// ====== Remove Item ======
-const removeButtons = document.getElementsByClassName("remove");
-for (let i = 0; i < removeButtons.length; i++) {
-  removeButtons[i].onclick = function () {
-    this.parentElement.remove(); // حذف المنتج من الكارت
-    updateSummary(); // تحديث الملخص بعد الحذف
-  };
-}
-
-// ====== Update Order Summary ======
-function updateSummary() {
-  const cartItems = document.getElementsByClassName("cart-item");
-  let subtotal = 0;
-
-  for (let i = 0; i < cartItems.length; i++) {
-    const item = cartItems[i];
-    const priceText = item.querySelector(".price").innerText; // "$45.00"
-    const price = parseFloat(priceText.replace("$", ""));
-    const qty = parseInt(item.querySelector(".qty span").innerText);
-    subtotal += price * qty; // السعر × الكمية
   }
 
-  const shipping = 0; // مجاني
-  const tax = subtotal * 0.08; // 8% ضريبة كمثال
-  const total = subtotal + shipping + tax;
+  if (e.target.classList.contains("minus") && item) {
+    if (item.qty > 1) {
+      item.qty -= 1;
+    } else {
+      cart = cart.filter((p) => p.id !== id);
+    }
+  }
 
-  // تحديث العرض في Order Summary
-  const summary = document.querySelector(".summary");
-  summary.querySelector(".row span:nth-child(2)").innerText =
-    `$${subtotal.toFixed(2)}`;
-  summary.querySelector(".total span:nth-child(2)").innerText =
-    `$${total.toFixed(2)}`;
-}
+  if (e.target.classList.contains("remove")) {
+    cart = cart.filter((p) => p.id !== id);
+  }
+
+  saveCart(cart);
+  renderCart();
+});
+
+// ===== CHECKOUT + FIREBASE =====
+document.getElementById("checkoutBtn").addEventListener("click", async () => {
+  const cart = getCart();
+  if (cart.length === 0) return alert("Your cart is empty!");
+
+  // تحويل الكارت إلى items array داخل order
+  const itemsForFirebase = cart.map((item) => ({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: item.qty,
+    status: "pending",
+  }));
+
+  const order = {
+    userId: "guest_user",
+    createdAt: new Date().toISOString(),
+    items: itemsForFirebase,
+  };
+
+  console.log("ORDER SENT TO FIREBASE:", order);
+
+  try {
+    await addDoc(collection(db, "orders"), order);
+    localStorage.removeItem("cart");
+    renderCart();
+    alert("Order placed successfully ✅");
+    window.location.href = "../Order Page/order.html";
+  } catch (err) {
+    console.error("Error saving order:", err);
+    alert("Failed to place order");
+  }
+});
+
+// ===== INIT =====
+renderCart();
