@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+
+
+
+    <link rel="stylesheet" href="./css/products.css">
+    <title>Products</title>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="logo">
+                <img src="" alt="logo">
+                <h2>E-Commerce</h2>
+            </div>
+            <nav class="nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Item 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Item 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Item 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Item 2</a>
+                </li>
+            </nav>
+
+            <div class="search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="Search" placeholder="        Search for unqiue pices ...">
+
+            </div>
+
+            <div class="login">
+                <a href="#"><i class="far fa-heart"></i></a>
+                <a href="#"><i class="fas fa-cart-shopping"></i></a>
+                <a href="#"><i class="fa-solid fa-user"></i></a>
+            </div>
+        </header>
+        <div class="bridcumb">
+            <div class="passlink">
+                <div class="pass">
+                    <a href="index.html">Home</a>
+                    <i class="fa-solid fa-chevron-right"></i>
+                    <span id="passlink" style="width: 178px;">Living Room Furniture</span>
+                </div>
+                <h1>Artisan Furniture</h1>
+            </div>
+            <div class="sortarea">
+                <p>Showing <span>24</span> of 120 products</p>
+                <div class="sort">
+                    <span>Sort by:</span>
+                    <select name="sortselect" id="sortselect">
+                        <option value="Most Popular">Most Popular</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <aside>
+                <div class="categoreis">
+                    <div class="reset">
+                        <h3>Categories</h3>
+                        <input type="reset" value="Reset">
+                    </div>
+                </div>
+                <div class="filter-price">
+                    <h3>Price Range</h3>
+
+                    <div class="price-range">
+                        
+
+                        <input type="text" name="minRange" min="0" max="5000" placeholder="enter min price" id="minRange">
+
+                        <input type="text" name="maxRange" min="0" max="5000"placeholder="enter max price" id="maxRange">
+
+                    </div>
+                    <input id="filter" type="submit" value="Filter">
+                </div>
+
+
+            </aside>
+            <section class="products">
+            </section>
+        </div>
+
+        <footer>footer</footer>
+    </div>
+
+    <script type="module" src="./js/products.js"></script>
+</body>
+</html>
