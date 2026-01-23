@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin | Products</title>
+
+    <!-- Dashboard Styles (Navbar + Sidebar) -->
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+
+    <!-- Products Page Styles -->
+    <link rel="stylesheet" href="assets/css/productAdmin.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="assets/images/logos/logo.png" alt="Logo">
+        </div>
+
+        <div class="user-info">
+            <div class="userName"><span>Alex Rivera</span></div>
+            <div class="userType"><span>ADMIN</span></div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li>
+                    <a href="dashboard.html">
+                        <img src="assets/images/icons/menu.png" class="menu-icon">
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="productAdmin.html" class="active">
+                        <img src="assets/images/icons/archive.png" class="menu-icon">
+                        Product Management
+                    </a>
+                </li>
+
+                <li>
+                    <a href="categorieAdmin.html">
+                        <img src="assets/images/icons/shapes.png" class="menu-icon">
+                        Category Management
+                    </a>
+                </li>
+
+                <li>
+                    <a href="orderAdmin.html">
+                        <img src="assets/images/icons/done.png" class="menu-icon">
+                        Order Management
+                    </a>
+                </li>
+            </ul>
+
+            <div class="signout">
+                <button>Sign Out</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- Header -->
+            <div class="header">
+                <div>
+                    <h1>Products Management</h1>
+                    <p>Manage products, stock and pricing</p>
+                </div>
+
+                <button id="addProductBtn">+ Add New Product</button>
+            </div>
+
+            <!-- Filter -->
+            <div class="filter">
+                <label for="categoryFilter">Filter by category:</label>
+                <select id="categoryFilter">
+                    <option value="all">All</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Books">Books</option>
+                </select>
+            </div>
+
+            <!-- Products Table -->
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="productsBody">
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- Add / Edit Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <h3>Add New Product</h3>
+
+            <input type="text" id="name" placeholder="Product Name">
+            <small class="error"></small>
+
+            <input type="number" id="price" placeholder="Price">
+            <small class="error"></small>
+
+            <select id="category">
+                <option value="">Select Category</option>
+                <option>Fashion</option>
+                <option>Electronics</option>
+                <option>Books</option>
+            </select>
+            <small class="error"></small>
+
+            <input type="number" id="stock" placeholder="Stock Quantity">
+            <small class="error"></small>
+
+            <input type="text" id="image" placeholder="Image URL">
+            <small class="error"></small>
+
+            <textarea id="description" placeholder="Description"></textarea>
+
+            <div class="modal-actions">
+                <button id="saveProduct">Save</button>
+                <button id="cancelProduct">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <h3>Delete Product</h3>
+            <p>Are you sure you want to delete this product?</p>
+
+            <div class="modal-actions">
+                <button class="danger" id="confirmDelete">Delete</button>
+                <button id="cancelDelete">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="/assets//js/links.js"></script>
+    <script type="module" src="assets/js/productAdmin.js"></script>
+</body>
+</html>

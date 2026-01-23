@@ -46,8 +46,8 @@ body {
 }
 
 .navbar .logo img {
-    width: 80px;
-    height: 30px;
+    width: 100%;
+    height: 40px;
 }
 
 /* Container */
@@ -59,74 +59,77 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 220px;
-    background-color: #ffffff;
+    width: 240px;
+    background: #ffffff;
+    border-right: 1px solid #e6e6e6;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 20px 0;
-    color: #0b7974;
-    box-shadow: 3px 0 8px rgba(0, 0, 0, 0.2);
-    font-size: 14px;
 }
 
-/* Menu */
-.sidebar .menu {
+.menu {
     list-style: none;
-    padding: 10px 10px;
+    padding: 20px 0;
+    margin: 0;
 }
 
-.sidebar .menu li {
-    margin: 20px 0;
+.menu li {
+    margin-bottom: 5px;
 }
 
 .menu a {
-    color: #0b7974;
-    text-decoration: none;
-    padding: 10px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    border-radius: 5px;
+    gap: 12px;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.menu a:hover {
+    background: #f2f7f7;
+    color: #0b7974;
+}
+
+.menu a.active {
+    background: #e6f3f2;
+    color: #0b7974;
+    font-weight: 600;
+    border-right: 4px solid #0b7974;
 }
 
 .menu-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
+    width: 18px;
+    height: 18px;
 }
 
-
-.sidebar .menu a:hover,
-.sidebar .menu a.active {
-    background-color: #0b797477;
-    color: #ffffff;
-    border: 2px solid #0b7974;
+/* Sign out */
+.signout {
+    padding: 20px;
 }
 
-
-/* Sign Out */
-.sidebar .signout {
-    padding: 0 20px;
-}
-
-.sidebar .signout button {
+.signout button {
     width: 100%;
     padding: 10px;
+    background: #dc3545;
+    color: #fff;
     border: none;
-    border-radius: 5px;
-    background-color: #0b7974;
-    color: #ffffff;
+    border-radius: 6px;
     cursor: pointer;
 }
 
-.sidebar .signout button:hover {
-    background-color: red;
+.signout button:hover {
+    background: #b52a37;
 }
 
 
 
-/* Main Content */
+
+/* Main Content*/
+
 .main-content {
     flex: 1;
     padding: 30px 40px;
@@ -202,163 +205,3 @@ body {
 }
 
 
-.orders-table {
-    margin-top: 50px;
-}
-
-.table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-#viewMoreBtn {
-    color: #0b7974;
-
-}
-
-#viewMoreBtn:hover {
-    color: #095d5b;
-    text-decoration: underline;
-}
-
-
-.orders-table h3 {
-    color: #000000;
-    margin-bottom: 15px;
-}
-
-.orders-table table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.orders-table th,
-.orders-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    font-size: 14px;
-}
-
-.orders-table th {
-    background-color: #0b7974;
-    color: #ffffff;
-}
-
-.orders-table button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 12px;
-    margin-right: 5px;
-}
-
-.orders-table .confirm {
-    background-color: #0b7974;
-    color: #ffffff;
-}
-
-.orders-table .confirm:hover {
-    background-color: #095d5b;
-}
-
-.orders-table .reject {
-    background-color: darkred;
-    color: #ffffff;
-}
-
-.orders-table .reject:hover {
-    background-color: red;
-}
-
-
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.55);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-/* صندوق البوباب */
-.popup-content {
-    background: #ffffff;
-    padding: 25px 20px;
-    border-radius: 12px;
-    width: 340px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    animation: popupFade 0.3s ease;
-    text-align: center;
-}
-
-/* النص */
-.popup-content p {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-/* input سبب الرفض */
-.popup-content textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    margin-bottom: 15px;
-    outline: none;
-}
-
-.popup-content input:focus {
-    border-color: #0b7974;
-}
-
-/* الأزرار */
-.actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.actions button {
-    flex: 1;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-/* زر OK */
-#okBtn {
-    background: #0b7974;
-    color: #fff;
-}
-
-#okBtn:hover {
-    background: #0a6765;
-}
-
-/* زر Cancel */
-.actions button:last-child {
-    background: #dc3545;
-    color: #fff;
-}
-
-.actions button:last-child:hover {
-    background: #c82333;
-}
