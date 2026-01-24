@@ -6,3 +6,5 @@ const links = document.querySelectorAll(".menu a");
             link.classList.add("active");
         }
     });
+
+    

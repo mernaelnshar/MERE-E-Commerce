@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Orders</title>
+    <title>Admin Orders Details</title>
     <link rel="stylesheet" href="assets/css/dashboard.css">
     <link rel="stylesheet" href="assets/css/orderAdmin.css">
 
@@ -12,7 +12,7 @@
 
 <body>
 
-    <!-- Navbar ثابت فوق -->
+
     <div class="navbar">
         <div class="logo">
             <img src="assets/images/logos/logo.png" alt="Logo" class="logo-img">
@@ -58,60 +58,26 @@
         <div class="main-content">
             <div class="header">
                 <div>
-                    <h1>Orders Management</h1>
-                    <p>Streamline fulfillment, manage returns, and track sales performance.</p>
+                    <h1>Orders Details</h1>
                 </div>
             </div>
-
-            <div class="stats-cards">
-                <div class="card">
-                    <img src="assets/images/icons/done.png" alt="">
-                    <h3>Confirmed</h3>
-                    <p></p>
-                </div>
-
-                <div class="card">
-                    <img src="assets/images/icons//file.png" alt="">
-                    <h3>Pending Orders</h3>
-                    <p></p>
-                </div>
-
-                <div class="card">
-                    <img src="assets/images/icons/return-box.png" alt="">
-                    <h3>Return Requests</h3>
-                    <p></p>
-                </div>
-                <div class="card">
-                    <img src="assets/images/icons/reject.png" alt="">
-                    <h3>Rejected</h3>
-                    <p></p>
-                </div>
-            </div>
-
-
-
 
             <div class="orders-table">
 
                 <div class="filter">
-                    <label for="statusFilter">Filter by status:</label>
                     <select id="statusFilter">
-                        <option value="all">All</option>
-                        <option value="Confirmed">Confirmed</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Return Requests">Return Requests</option>
-                        <option value="Rejected">Rejected</option>
+                        <option value="all">All Orders</option>
                     </select>
+
                 </div>
 
                 <table>
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>CUSTOMER</th>
-                            <th>DATE</th>
-                            <th>STATUS</th>
-                            <th>ACTION</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
                         </tr>
                     </thead>
                     <tbody id="ordersBody">
@@ -121,7 +87,7 @@
 
             </div>
 
-            
+
             <div id="popup" class="popup">
                 <div class="popup-content">
                     <p id="popupText"></p>
@@ -139,7 +105,7 @@
 
     </div>
     <script type="module" src="/assets//js/links.js"></script>
-    <script type="module" src="/assets/js/orderAdmin.js"></script>
+    <script type="module" src="/assets/js/orderDetails.js"></script>
 </body>
 
 </html>

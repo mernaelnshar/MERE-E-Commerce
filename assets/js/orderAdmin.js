@@ -1,4 +1,4 @@
-import { db, collection, getDocs, updateDoc, doc } from "./firebase.js";
+import { db, collection, getDocs, updateDoc, doc  } from "./firebase.js";
 
 const ordersBody = document.getElementById("ordersBody");
 const filterSelect = document.getElementById("statusFilter");
@@ -63,7 +63,6 @@ async function loadOrders() {
         row.innerHTML = `
         <td>#C-${id.slice(-4)}</td>
         <td>${order.userId}</td>
-        <td>${order.total}</td>
         <td>${new Date(order.createdAt).toLocaleString()}</td>
         <td>${formatStatus(order.status)}</td>
         <td>${actions}</td>
