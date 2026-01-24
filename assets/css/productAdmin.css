@@ -117,20 +117,18 @@
     Modal
 ========================= */
 .modal {
+    display: none; 
     position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    align-items: center;
+    top: 0; left: 0; right:0; bottom:0;
+    background: rgba(0,0,0,0.5);
     justify-content: center;
-    z-index: 999;
+    align-items: center;
 }
-
 .modal-content {
-    background: #ffffff;
-    width: 340px;
+    background: #fff;
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 10px;
+    width: 400px;
 }
 
 .modal-content h3 {

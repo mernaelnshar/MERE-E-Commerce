@@ -25,6 +25,7 @@
 
 .orders-table th,
 .orders-table td {
+    text-align: center; 
     padding: 12px;
     border-bottom: 1px solid #ddd;
     font-size: 14px;

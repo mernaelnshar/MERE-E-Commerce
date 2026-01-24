@@ -1,4 +1,4 @@
-import {db, collection, getDocs, query, where } from "./firebase.js";
+import {db, collection, getDocs, query, where , doc , getDoc , setDoc , addDoc , updateDoc} from "./firebase.js";
 
 const totalProductsEl = document.getElementById("totalProducts");
 const totalCategoriesEl = document.getElementById("totalCategories");
@@ -15,7 +15,7 @@ async function getTotalCategories() {
 }
 
 async function getPendingOrders() {
-    const q = query(collection(db,"orders") , where("ststus" , "==" , "Panding"));
+    const q = query(collection(db,"orders") , where("status" , "==" , "pending"));
     const snapshot = await getDocs(q);
     pendingOrdersEl.innerText = snapshot.size;
     
@@ -28,4 +28,3 @@ getPendingOrders();
 
 
 // *************************************************************************
-

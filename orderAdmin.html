@@ -64,24 +64,24 @@
                 <div class="card">
                     <img src="assets/images/icons/done.png" alt="">
                     <h3>Confirmed</h3>
-                    <p>1,240</p>
+                    <p></p>
                 </div>
 
                 <div class="card">
                     <img src="assets/images/icons//file.png" alt="">
                     <h3>Pending Orders</h3>
-                    <p>45</p>
+                    <p></p>
                 </div>
 
                 <div class="card">
                     <img src="assets/images/icons/return-box.png" alt="">
                     <h3>Return Requests</h3>
-                    <p>6</p>
+                    <p></p>
                 </div>
                 <div class="card">
                     <img src="assets/images/icons/reject.png" alt="">
                     <h3>Rejected</h3>
-                    <p>15</p>
+                    <p></p>
                 </div>
             </div>
 
@@ -113,72 +113,31 @@
                         </tr>
                     </thead>
                     <tbody id="ordersBody">
-                        <tr data-status="Pending">
-                            <td>#ORD-9012</td>
-                            <td>Jane Doe</td>
-                            <td>$299.00</td>
-                            <td>Jan 18, 2:15 PM</td>
-                            <td>Pending</td>
-                            <td>
-                                <button class="confirm">Confirm</button>
-                                <button class="reject">Reject</button>
-                            </td>
-                        </tr>
 
-                        <tr data-status="Confirmed">
-                            <td>#ORD-9001</td>
-                            <td>Mark Twain</td>
-                            <td>$450.00</td>
-                            <td>Jan 17, 1:00 PM</td>
-                            <td>Confirmed</td>
-                            <td></td>
-                        </tr>
-
-                        <tr data-status="Return Requests">
-                            <td>#ORD-8999</td>
-                            <td>Anna Bell</td>
-                            <td>$99.00</td>
-                            <td>Jan 16, 11:30 AM</td>
-                            <td>Return Requests</td>
-                            <td>
-                                <button class="confirm">Accept Return</button>
-                                <button class="reject">Reject</button>
-                            </td>
-                        </tr>
-
-                        <tr data-status="Rejected">
-                            <td>#ORD-8899</td>
-                            <td>Mary Johnson</td>
-                            <td>$520.00</td>
-                            <td>Jan 16, 9:45 AM</td>
-                            <td>Rejected</td>
-                            <td></td>
-                        </tr>
                     </tbody>
                 </table>
 
             </div>
 
-            <!-- Popup -->
+            
             <div id="popup" class="popup">
                 <div class="popup-content">
                     <p id="popupText"></p>
 
-                    <textarea name="rejectReason" id="rejectReason" placeholder="Enter rejection reason"></textarea>
-
                     <div class="actions">
                         <button id="okBtn">OK</button>
-                        <button onclick="closePopup()">Cancel</button>
+                        <button id="cancelBtn">Cancel</button>
                     </div>
                 </div>
             </div>
+
 
         </div>
 
 
     </div>
-    <script src="/assets//js/links.js"></script>
-    <script src="/assets/js/orderAdmin.js"></script>
+    <script type="module" src="/assets//js/links.js"></script>
+    <script type="module" src="/assets/js/orderAdmin.js"></script>
 </body>
 
 </html>

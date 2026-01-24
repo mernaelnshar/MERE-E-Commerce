@@ -1,82 +1,156 @@
+import { db, collection, getDocs, updateDoc, doc } from "./firebase.js";
+
+const ordersBody = document.getElementById("ordersBody");
 const filterSelect = document.getElementById("statusFilter");
-const ordersTable = document.querySelector(".orders-table tbody");
-
-filterSelect.addEventListener("change", function() {
-    const selected = this.value; // all / Confirmed / Pending / Return Requests / Rejected
-    const rows = ordersTable.querySelectorAll("tr");
-
-    rows.forEach(row => {
-        const status = row.getAttribute("data-status");
-        if (selected === "all" || status === selected) {
-            row.style.display = ""; // show
-        } else {
-            row.style.display = "none"; // hide
-        }
-    });
-});
-
 
 const popup = document.getElementById("popup");
 const popupText = document.getElementById("popupText");
-const rejectReason = document.getElementById("rejectReason");
 const okBtn = document.getElementById("okBtn");
+const cancelBtn = document.getElementById("cancelBtn");
 
-let actionType = "";
-let currentRow = null; // الصف اللي اتضغط عليه
+let currentOrderId = null;
+let currentAction = null;
 
-// نسمع أي كليك جوه الجدول
-document.addEventListener("click", function (e) {
+const cards = {
+    confirmed: document.querySelector(".card:nth-child(1) p"),
+    pending: document.querySelector(".card:nth-child(2) p"),
+    return_requests: document.querySelector(".card:nth-child(3) p"),
+    rejected: document.querySelector(".card:nth-child(4) p")
+};
 
-    // Confirm
+async function loadOrders() {
+    ordersBody.innerHTML = "";
+
+    let counts = {
+        confirmed: 0,
+        pending: 0,
+        return_requests: 0,
+        rejected: 0
+    };
+
+    const snapshot = await getDocs(collection(db, "orders"));
+
+    snapshot.forEach((docSnap) => {
+
+        const order = docSnap.data();
+        const id = docSnap.id;
+
+        // count cards
+        if (counts[order.status] !== undefined) {
+            counts[order.status]++;
+        }
+
+        // actions
+        let actions = "";
+
+        if (order.status === "pending") {
+            actions = `
+        <button class="confirm" data-id="${id}">Confirm</button>
+        <button class="reject" data-id="${id}">Reject</button>
+    `;
+        }
+
+        if (order.status === "return_requests") {
+            actions = `
+        <button class="confirm" data-id="${id}">Accept Return</button>
+        <button class="reject" data-id="${id}">Reject</button>
+    `;
+        }
+
+        const row = document.createElement("tr");
+        row.dataset.status = formatStatus(order.status);
+        row.dataset.id = id;
+        row.innerHTML = `
+        <td>#C-${id.slice(-4)}</td>
+        <td>${order.userId}</td>
+        <td>${order.total}</td>
+        <td>${new Date(order.createdAt).toLocaleString()}</td>
+        <td>${formatStatus(order.status)}</td>
+        <td>${actions}</td>
+    `;
+
+        ordersBody.appendChild(row);
+    });
+
+    cards.confirmed.innerText = counts.confirmed;
+    cards.pending.innerText = counts.pending;
+    cards.return_requests.innerText = counts.return_requests;
+    cards.rejected.innerText = counts.rejected;
+}
+
+loadOrders();
+
+ordersBody.addEventListener("click", async (e) => {
+    const orderId = e.target.dataset.id;
+    if (!orderId) return;
+
+    currentOrderId = orderId;
+
+    // CONFIRM
     if (e.target.classList.contains("confirm")) {
-        actionType = "confirm";
-        currentRow = e.target.closest("tr");
-
-        popupText.innerText = "Approved Successfully";
-        rejectReason.style.display = "none";
-        popup.style.display = "flex";
+        currentAction = "confirm";
+        popupText.innerText = "Are you sure you want to confirm this order?";
+        popup.style.display = "flex"; // نفتح البوب اب
     }
 
-    // Reject
+    // REJECT
     if (e.target.classList.contains("reject")) {
-        actionType = "reject";
-        currentRow = e.target.closest("tr");
-
-        popupText.innerText = "Please enter rejection reason";
-        rejectReason.style.display = "block";
+        currentAction = "reject";
+        popupText.innerText = "Are you sure you want to reject this order?";
         popup.style.display = "flex";
     }
 });
 
-// OK Button
-okBtn.onclick = () => {
-    if (!currentRow) return;
+// زرار OK
+okBtn.addEventListener("click", async () => {
+    if (!currentOrderId) return;
 
-    const statusCell = currentRow.children[4]; // عمود STATUS
-    const actionCell = currentRow.children[5];
-
-    if (actionType === "confirm") {
-        statusCell.innerText = "Confirmed";
-        currentRow.setAttribute("data-status", "Confirmed");
+    if (currentAction === "confirm") {
+        await updateDoc(doc(db, "orders", currentOrderId), {
+            status: "confirmed"
+        });
     }
 
-    if (actionType === "reject") {
-        if (rejectReason.value === "") {
-            alert("Please write the reason");
-            return;
-        }
-
-        statusCell.innerText = "Rejected";
-        currentRow.setAttribute("data-status", "Rejected");
-        rejectReason.value = "";
+    if (currentAction === "reject") {
+        await updateDoc(doc(db, "orders", currentOrderId), {
+            status: "rejected"
+        });
     }
-    
-    actionCell.innerHTML = "";
-    closePopup();
-};
 
-function closePopup() {
+    popup.style.display = "none"; // إغلاق البوب اب
+    loadOrders();
+    currentOrderId = null;
+    currentAction = null;
+});
+
+// زرار Cancel
+cancelBtn.addEventListener("click", () => {
     popup.style.display = "none";
-    rejectReason.value = "";
-    currentRow = null;
+    currentOrderId = null;
+    currentAction = null;
+});
+
+function formatStatus(status) {
+    switch (status) {
+        case "pending": return "Pending";
+        case "confirmed": return "Confirmed";
+        case "return_requests": return "Return Requests";
+        case "rejected": return "Rejected";
+        default: return status;
+    }
 }
+
+filterSelect.addEventListener("change", function () {
+  const selected = this.value;
+  const rows = ordersBody.querySelectorAll("tr");
+
+  rows.forEach(row => {
+    const status = row.dataset.status;
+
+    if (selected === "all" || status === selected) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+});
