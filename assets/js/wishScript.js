@@ -3,42 +3,60 @@ import { auth, db, onAuthStateChanged, collection, getDocs } from "./firebase.js
 // ===== SELECT CONTAINER =====
 const wishlistContainer = document.getElementById("wishlistContainer");
 
-// ===== FETCH WISHLIST FOR USER =====
+// ===== FETCH WISHLIST =====
 async function fetchWishlist(userId) {
   wishlistContainer.innerHTML = "<p>Loading wishlist...</p>";
 
   try {
-    const wishlistColRef = collection(
-      db,
-      "wishlists",
-      userId,
-      "ProductWishlist"
-    );
+    const wishlistRef = collection(db, "wishlists", userId, "ProductWishlist");
 
-    const wishlistSnapshot = await getDocs(wishlistColRef);
+    const snapshot = await getDocs(wishlistRef);
 
-    wishlistContainer.innerHTML = "";
-
-    if (wishlistSnapshot.empty) {
+    if (snapshot.empty) {
       wishlistContainer.innerHTML = "<p>Your wishlist is empty.</p>";
       return;
     }
 
-    wishlistSnapshot.forEach((docSnap) => {
-      const prodData = docSnap.data();
+    const productsGrid = document.createElement("div");
+    productsGrid.className = "products";
 
-      const div = document.createElement("div");
-      div.className = "wishlist-item";
-      div.innerHTML = `
-        <h3>${prodData.title}</h3>
-        <p>Price: $${prodData.price}</p>
+    snapshot.forEach((docSnap) => {
+      const product = docSnap.data();
+
+      const card = document.createElement("div");
+      card.className = "card";
+
+      card.innerHTML = `
+        <img src="${product.image || "assets/images/no-image.png"}">
+        <h3>${product.title}</h3>
+        <span class="price">$${product.price}</span>
+
+        <div class="actions">
+          <button class="remove-btn">Remove</button>
+        </div>
       `;
 
-      wishlistContainer.appendChild(div);
+      // ===== REMOVE BUTTON =====
+      card.querySelector(".remove-btn").addEventListener("click", async () => {
+        await deleteDoc(
+          doc(db, "wishlists", userId, "ProductWishlist", docSnap.id),
+        );
+
+        card.remove();
+
+        // لو فاضية بعد الحذف
+        if (!productsGrid.children.length) {
+          wishlistContainer.innerHTML = "<p>Your wishlist is empty.</p>";
+        }
+      });
+
+      productsGrid.appendChild(card);
     });
 
-  } catch (err) {
-    console.error("Error fetching wishlist:", err);
+    wishlistContainer.innerHTML = "";
+    wishlistContainer.appendChild(productsGrid);
+  } catch (error) {
+    console.error(error);
     wishlistContainer.innerHTML = "<p>Failed to load wishlist.</p>";
   }
 }
@@ -46,16 +64,12 @@ async function fetchWishlist(userId) {
 // ===== AUTH LISTENER =====
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // المستخدم عامل Login
-    const userId = user.uid;
-    console.log("Logged in userId:", userId);
-    fetchWishlist(userId);
+    fetchWishlist(user.uid);
   } else {
-    // مش عامل Login
-    wishlistContainer.innerHTML =
-      "<p>Please login to see your wishlist.</p>";
+    wishlistContainer.innerHTML = "<p>Please login to view your wishlist.</p>";
   }
 });
 
 // ===== INIT =====
-fetchWishlist("1"); // ضع هنا الـ userId
+
+// fetchWishlist("1"); // ضع هنا الـ userId
