@@ -24,25 +24,11 @@ const products = [
 ];
 
 // ===== FIREBASE =====
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
-  getFirestore,
   collection,
   addDoc,
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+} from "./firebase";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDZmtAma7FFyJVEaHNbRk1ovmqwCO5m1p0",
-  authDomain: "goshop-e43f1.firebaseapp.com",
-  projectId: "goshop-e43f1",
-  storageBucket: "goshop-e43f1.firebasestorage.app",
-  messagingSenderId: "788272001640",
-  appId: "1:788272001640:web:d0c5adf18daab3ee8e81dd",
-  measurementId: "G-K8ME02DXJW",
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 // ===== LOCAL STORAGE =====
 function getCart() {
@@ -163,7 +149,7 @@ document.getElementById("checkoutBtn").addEventListener("click", async () => {
     localStorage.removeItem("cart");
     renderCart();
     alert("Order placed successfully ✅");
-    window.location.href = "../Order Page/order.html";
+    window.location.href = "/order.html";
   } catch (err) {
     console.error("Error saving order:", err);
     alert("Failed to place order");

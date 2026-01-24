@@ -1,4 +1,4 @@
-import { db, collection, getDocs, doc, setDoc, getDoc } from "./firebase/firebase.js";
+import { db, collection, getDocs, doc, setDoc, getDoc } from "./firebase.js";
 import { getAuth, onAuthStateChanged } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
@@ -39,7 +39,7 @@ async function getCategories() {
     //  icon
     let iconSpan = document.createElement("span");
     let iconImg = document.createElement("img");
-    iconImg.src = cat.icon || "./logos/armchair.png";
+    iconImg.src = cat.icon || "/assets/armchair.png";
     iconImg.alt = cat.name;
     iconSpan.appendChild(iconImg);
 
