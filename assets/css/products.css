@@ -57,6 +57,11 @@
     justify-content: space-between;
     margin: 20px 20px 20px 60px;
 }
+.pass a{
+    text-decoration: none;
+    color: #111;
+
+}
 .passlink h1{
     margin-bottom: 20px;
 }
@@ -270,6 +275,8 @@ aside {
     -moz-border-radius: 9999px;
     -ms-border-radius: 9999px;
     -o-border-radius: 9999px;
+    text-decoration: none;
+    color: #111;
 }
 .category:hover{
     background-color: #0b7974;
@@ -369,6 +376,7 @@ aside {
     width: 3rem;
     height: 30px;
 }
+
 
 
 
