@@ -117,7 +117,7 @@ authForm.addEventListener("submit", async (e) => {
 
   const role = detectRole(mail);
   if (role === "unknown") {
-    showMsg("Invalid email format. Use @gmail.com or @eud.com", "fail");
+    showMsg("Invalid email format. Use @gmail.com", "fail");
     return;
   }
 
@@ -141,8 +141,8 @@ authForm.addEventListener("submit", async (e) => {
       showMsg("Account created successfully. Redirecting...", "success");
 
       setTimeout(() => {
-        if (role === "admin") window.location.href = "admin.html";
-        else window.location.href = "nav-footer.html";
+        if (role === "admin") window.location.href = "dashboard.html";
+        else window.location.href = "products.html";
       }, 900);
 
     } else {
@@ -154,8 +154,8 @@ authForm.addEventListener("submit", async (e) => {
       showMsg("Login successful. Redirecting...", "success");
 
       setTimeout(() => {
-        if (userRole === "admin") window.location.href = "admin.html";
-        else window.location.href = "dashboard.html";
+        if (userRole === "admin") window.location.href = "dashboard.html";
+        else window.location.href = "products.html";
       }, 900);
     }
   } catch (error) {
