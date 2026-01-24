@@ -156,7 +156,7 @@ section {
     -o-border-radius: 9999px;
 }
 .addToWishList:hover{
-    background-color: #e3a7b9;
+    background-color: #f5f3f3;
     cursor: pointer;
 }
 .addToWishList button{
@@ -165,7 +165,7 @@ section {
     
 }
 .far:hover,.fa-heart:hover{
-    outline-color: #e3a7b9;
+    color: #e3a7b9;
 
 }
 .product img{
@@ -218,16 +218,37 @@ aside {
 }
 .categoreis{
     width: 100%;
-    height:300px;
+    height:140px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+.categoreis::-webkit-scrollbar {
+    width: 6px;
+}
+
+.categoreis::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.categoreis::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.categoreis::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
 .reset{
     width: 100%;
     height: fit-content;
     display: flex;
+    position: sticky;
+    top: 0%;
     justify-content: space-between;
 }
 .reset h1{
@@ -238,9 +259,14 @@ aside {
     display: inline-block;
 }
 .reset input{
-    background: none;
+    width: 60px;
+    height: 20px;
+    background-color:#0b7974;
     border: none;
     cursor: pointer;
+    margin-right: 10px;
+    color: #ffffff;
+    border-radius: 3px;
 }
 .reset input:hover{
     background-color:#0b7974;
@@ -347,8 +373,9 @@ aside {
 #maxRange,#minRange {
     width: 60%;
     height: 2rem;
-    background-color: #0b7974;
+    background-color: #eef6f6;
     border-radius: 7px;
+    border: 2px solid #0b7974;
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
     -ms-border-radius: 7px;
