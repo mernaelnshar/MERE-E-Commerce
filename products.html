@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Go Shop Navbar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
-    
-    <style>
+
+        <style>
         * {
             margin: 0;
             padding: 0;
@@ -241,10 +239,43 @@
         }
 
     </style>
-    <link rel="stylesheet" href="assets/css/products.css">
+
+
+    <link rel="stylesheet" href="/assets/css/products.css">
+    <title>Products</title>
 </head>
 <body>
     <div class="page">
+        <nav class="navbar">
+                <img src="assets/images/logos/logo.png" alt="Go Shop Logo" class="logo-img">
+
+                <ul class="nav-links">
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-store"></i> Shop
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-heart"></i> Wishlist
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-box-open"></i> Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-cart-shopping"></i>Carts
+                        </a>
+                    </li>
+                </ul>
+
+                <button class="logout-btn" onclick="window.location.href='login.html'">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+        </nav>
         <div class="bridcumb">
             <div class="passlink">
                 <div class="pass">
@@ -253,6 +284,19 @@
                     <span id="passlink" style="width: 178px;">Living Room Furniture</span>
                 </div>
                 <h1>Artisan Furniture</h1>
+            </div>
+            <div class="sortarea">
+                <p>Showing <span>24</span> of 120 products</p>
+                <div class="sort">
+                    <span>Sort by:</span>
+                    <select name="sortselect" id="sortselect">
+                        <option value="Most Popular">Most Popular</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="content">
@@ -283,41 +327,7 @@
             </section>
         </div>
 
-
-    <script type="module" src="./js/products.js"></script>
-<body>
-
-    <nav class="navbar">
-        <img src="assets/images/logos/logo.png" alt="Go Shop Logo" class="logo-img">
-
-        <ul class="nav-links">
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-store"></i> Shop
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-heart"></i> Wishlist
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-box-open"></i> Orders
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="fa-solid fa-cart-shopping"></i>Carts
-                </a>
-            </li>
-        </ul>
-
-        <button class="logout-btn" onclick="window.location.href='login.html'">
-            <i class="fa-solid fa-right-from-bracket"></i> Logout
-        </button>
-    </nav>
-<footer class="footer-dark">
+        <footer class="footer-dark">
         <div class="footer-container">
             
             <div class="footer-col">
@@ -355,11 +365,8 @@
         </div>
     </footer>
 
-        <script type="module" src="assets/js/products.js"></script>
+    </div>
+
+    <script type="module" src="/assets/js/products.js"></script>
 </body>
 </html>
-
-
-
-
-
