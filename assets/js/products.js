@@ -1,50 +1,72 @@
-import { db, collection, getDocs, doc, setDoc, getDoc } from "./firebase.js";
-import { getAuth, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { 
+  db,
+  auth,
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  getDoc,
+  onAuthStateChanged,signOut
+} from "./firebase/firebase.js"; 
 
-const auth = getAuth();
+
+
+document.querySelector(".logout-btn").addEventListener("click", async () => {
+    try {
+        await signOut(auth); 
+        alert("You have been logged out.");
+        window.location.href = "login.html"; 
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("Error logging out. Please try again.");
+    }
+});
+
 var productsRef = collection(db, "products");
 var categoriesRef = collection(db, "categories");
-let section = document.querySelector(".products");
-let categoriesDiv = document.querySelector(".categoreis");
-const reviewsRef = collection(db, "reviews");
-let reviewsMap = {};
-let allProducts = [];       
-let filteredProducts = []; 
+var section = document.querySelector(".products");
+var categoriesDiv = document.querySelector(".categoreis");
+var reviewsRef = collection(db, "reviews");
+var reviewsMap = {};
+var allProducts = [];       
+var filteredProducts = []; 
 
-
-function getCurrentUser() {
-  return new Promise((resolve) => {
-    onAuthStateChanged(auth, (user) => {
-      resolve(user);
-    });
-  });
+function requireAuth() {
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Please login first!");
+        window.location.href = "login.html";
+        return null;
+    }
+    return user;
 }
 
+
+
 async function getCategories() {
-  let snapshot = await getDocs(categoriesRef);
+  var snapshot = await getDocs(categoriesRef);
   snapshot.forEach((docItem) => {
-    let cat = docItem.data(); 
+    var cat = docItem.data(); 
 
     // create <a>
-    let catLink = document.createElement("a");
+    var catLink = document.createElement("a");
     catLink.className = "category";
     catLink.href = "#";
     catLink.dataset.category = cat.name;
 
     //  left div
-    let leftDiv = document.createElement("div");
+    var leftDiv = document.createElement("div");
     leftDiv.className = "left";
 
     //  icon
-    let iconSpan = document.createElement("span");
-    let iconImg = document.createElement("img");
-    iconImg.src = cat.icon || "/assets/armchair.png";
+    var iconSpan = document.createElement("span");
+    var iconImg = document.createElement("img");
+    iconImg.src = cat.icon || "./logos/armchair.png";
     iconImg.alt = cat.name;
     iconSpan.appendChild(iconImg);
 
     //  name
-    let nameSpan = document.createElement("span");
+    var nameSpan = document.createElement("span");
     nameSpan.textContent = cat.name;
 
     leftDiv.appendChild(iconSpan);
@@ -75,7 +97,7 @@ async function getCategories() {
   });
 }
 async function getProducts() {
-  let snapshot = await getDocs(productsRef);
+  var snapshot = await getDocs(productsRef);
   allProducts = [];
   snapshot.forEach((docItem) => {
     allProducts.push({ id: docItem.id, ...docItem.data() });
@@ -121,9 +143,9 @@ function renderProducts(products,...pass) {
     desc.textContent = product.description;
     // STAR RATING  
     // console.log(reviewData?.avg )
-    const reviewData = reviewsMap[product.id];
+    var reviewData = reviewsMap[product.id];
     // console.log(reviewData?.avg,product.id)
-    const ratingDiv = createStarRating(
+    var ratingDiv = createStarRating(
     reviewData?.avg || 0,
     reviewData?.count || 0
     );
@@ -134,15 +156,18 @@ function renderProducts(products,...pass) {
     addToCartDiv.className = "addToCard";
 
     var btn = document.createElement("button");
+    btn.style.color='#ffffff'
 
     var icon = document.createElement("i");
     icon.className = "fas fa-cart-shopping";
+    icon.style.color='white'
 
     btn.appendChild(icon);
     btn.appendChild(document.createTextNode(" Quick Add"));
     addToCartDiv.appendChild(btn);
 
     btn.addEventListener("click", function () {
+        
         addToCart(product.id);
     });
 
@@ -158,6 +183,9 @@ function renderProducts(products,...pass) {
     addToWishListDiv.appendChild(btnWishList);
     btnWishList.addEventListener('click',function(){
         addToWishList(product)
+        iconwish.classList.remove("fa-regular");
+        iconwish.classList.add("fa-solid");
+        iconwish.style.color = "rgb(178, 18, 157)";
     })
 
     productDiv.appendChild(img);
@@ -173,12 +201,12 @@ function renderProducts(products,...pass) {
   });
 }
 async function getReviews() {
-  const snapshot = await getDocs(reviewsRef);
-  const temp = {};
+  var snapshot = await getDocs(reviewsRef);
+  var temp = {};
 
   snapshot.forEach((doc) => {
-    const data = doc.data();
-    const productId = data.productId;
+    var data = doc.data();
+    var productId = data.productId;
     if (!temp[productId]) {
       temp[productId] = { total: 0, count: 0 };
     }
@@ -188,7 +216,7 @@ async function getReviews() {
     
   });
 
-  for (let id in temp) {
+  for (var id in temp) {
     reviewsMap[id] = {
       avg:  Number((temp[id].total / temp[id].count).toFixed(1)),
       count: temp[id].count
@@ -199,90 +227,76 @@ async function getReviews() {
 
 
 async function addToCart(productId) {
-  const user = await getCurrentUser();
+    var user = requireAuth();
+    if (!user) return;
 
-  if (!user) {
-    alert("Please login first!");
-    return;
-  }
+    var cart = JSON.parse(localStorage.getItem("Cart")) || [];
+    var index = cart.findIndex(item => item.Product === productId && item.userid === user.uid);
 
-  let cart = JSON.parse(localStorage.getItem("Cart")) || [];
+    if (index === -1) {
+        cart.push({ userid: user.uid, Product: productId, Quantity: 1 });
+        alert('The product was added to cart');
+    } else {
+        cart[index].Quantity++;
+        alert('The product quantity increased by 1 in cart');
+    }
 
-  let index = cart.findIndex(
-    item => item.Product === productId && item.userid === user.uid
-  );
-
-  if (index === -1) {
-    cart.push({
-      userid: user.uid,
-      Product: productId,
-      Quantity: 1
-    });
-  } else {
-    cart[index].Quantity++;
-  }
-
-  localStorage.setItem("Cart", JSON.stringify(cart));
+    localStorage.setItem("Cart", JSON.stringify(cart));
 }
+
 
 
 async function addToWishList(proWish) {
-  const user = await getCurrentUser();
+    var user = requireAuth();
+    if (!user) return;
 
-  if (!user) {
-    alert("Please login first!");
-    return;
-  }
+    var wishRef = doc(db, "wishlists", user.uid, "ProductWishlist", proWish.id);
+    var wishSnap = await getDoc(wishRef);
 
-  const wishRef = doc(db,"wishlists",user.uid,"ProductWishlist",proWish.id);
+    if (wishSnap.exists()) {
+        alert("This product is already in your wishlist");
+        return;
+    }
 
-  const wishSnap = await getDoc(wishRef);
+    await setDoc(wishRef, {
+        title: proWish.title,
+        price: proWish.price,
+        image: proWish.imageURL,
+        createdAt: new Date()
+    });
 
-  if (wishSnap.exists()) {
-    alert("This product is already in your wishlist");
-    return;
-  }
-
-  await setDoc(wishRef, {
-    title: proWish.title,
-    price: proWish.price,
-    image: proWish.imageURL,
-    createdAt: new Date()
-  });
-
-  alert("Added to wishlist successfully");
+    alert("Added to wishlist successfully");
 }
 
 
+
+
 function applyFilters() {
-  let minRange = parseFloat(document.getElementById("minRange").value) || 0;
-  let maxRange = parseFloat(document.getElementById("maxRange").value) || Infinity;
+  var minRange = parseFloat(document.getElementById("minRange").value) || 0;
+  var maxRange = parseFloat(document.getElementById("maxRange").value) || Infinity;
 
-  let searchValue = document.getElementById("Search").value.toLowerCase().trim();
+ 
 
-  let activeCategory = document.querySelector(".category.activeCategory");
-  let selectedCategory = activeCategory ? activeCategory.dataset.category : "All";
+  var activeCategory = document.querySelector(".category.activeCategory");
+  var selectedCategory = activeCategory ? activeCategory.dataset.category : "All";
 
   filteredProducts = allProducts.filter((product) => {
-    let priceOk = product.price >= minRange && product.price <= maxRange;
+    var priceOk = product.price >= minRange && product.price <= maxRange;
 
-    let categoryOk =
+    var categoryOk =
       selectedCategory === "All" ? true : product.category === selectedCategory;
 
-    let searchOk =
-      product.title.toLowerCase().includes(searchValue) ||
-      product.description.toLowerCase().includes(searchValue);
 
-    return priceOk && categoryOk && searchOk;
+    return priceOk && categoryOk;
   });
-  let passfiltercat=selectedCategory
+  var passfiltercat=selectedCategory
 
   renderProducts(filteredProducts,passfiltercat);
 }
 
 // filter by price button
 function setupPriceFilter() {
-  let btnFilter = document.getElementById("filter");
+  var btnFilter = document.getElementById("filter");
 
   btnFilter.addEventListener("click", function () {
     // debugger
@@ -291,7 +305,7 @@ function setupPriceFilter() {
 }
 
 function setupReset() {
-  let resetBtn = document.querySelector(".reset input[type='reset']");
+  var resetBtn = document.querySelector(".reset input[type='reset']");
 
   resetBtn.addEventListener("click", function () {
     // remove active category
@@ -310,22 +324,16 @@ function setupReset() {
   });
 }
 
-function setupSearchLive() {
-  let searchInput = document.getElementById("Search");
 
-  searchInput.addEventListener("keyup", function () {
-    applyFilters();
-  });
-}
 function createStarRating(avg = 0, count = 0) {
-  const starDiv = document.createElement("div");
+  var starDiv = document.createElement("div");
   starDiv.className = "star-rating";
 
-  const fullStars = Math.floor(avg);
-  const hasHalf = avg - fullStars >= 0.5;
+  var fullStars = Math.floor(avg);
+  var hasHalf = avg - fullStars >= 0.5;
     // debugger
-  for (let i = 1; i <= 5; i++) {
-    const star = document.createElement("i");
+  for (var i = 1; i <= 5; i++) {
+    var star = document.createElement("i");
 
     if (i <= fullStars) {
       star.className = "fa-solid fa-star";
@@ -338,7 +346,7 @@ function createStarRating(avg = 0, count = 0) {
     starDiv.appendChild(star);
   }
 
-  const text = document.createElement("span");
+  var text = document.createElement("span");
   text.textContent = ` (${count})`;
   starDiv.appendChild(text);
 
@@ -346,7 +354,7 @@ function createStarRating(avg = 0, count = 0) {
 }
 
 
-let setupDone = false;
+var setupDone = false;
 
 onAuthStateChanged(auth, async (user) => {
   await getReviews();
@@ -355,13 +363,10 @@ onAuthStateChanged(auth, async (user) => {
 
   if (!setupDone) {
     setupReset();
-    setupSearchLive();
     setupPriceFilter();
     setupDone = true;
   }
 });
-
-
 
 
 
