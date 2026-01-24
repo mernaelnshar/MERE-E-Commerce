@@ -155,7 +155,7 @@ authForm.addEventListener("submit", async (e) => {
 
       setTimeout(() => {
         if (userRole === "admin") window.location.href = "admin.html";
-        else window.location.href = "nav-footer.html";
+        else window.location.href = "dashboard.html";
       }, 900);
     }
   } catch (error) {
