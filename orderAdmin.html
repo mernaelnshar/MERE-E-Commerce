@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Orders</title>
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/orderAdmin.css">
+
+</head>
+
+<body>
+
+    <!-- Navbar ثابت فوق -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="assets/images/logos/logo.png" alt="Logo" class="logo-img">
+        </div>
+        <div class="user-info">
+            <div class="userName"><span>Alex Rivera</span></div>
+            <div class="userType"><span>ADMIN</span></div>
+        </div>
+
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="dashboard.html">
+                        <img src="assets/images/icons/menu.png" alt="Dashboard Icon" class="menu-icon">
+                        Dashboard</a>
+                </li>
+                <li><a href="productAdmin.html">
+                        <img src="assets/images/icons/archive.png" alt="Product Icon" class="menu-icon">
+                        Product Management</a>
+                </li>
+                <li><a href="categorieAdmin.html">
+                        <img src="assets/images/icons/shapes.png" alt="Category Icon" class="menu-icon">
+                        Category Management</a>
+                </li>
+                <li><a href="orderAdmin.html">
+                        <img src="assets/images/icons/done.png" alt="Category Icon" class="menu-icon">
+                        Order Management</a>
+                </li>
+            </ul>
+            <div class="signout">
+                <button>Sign Out</button>
+            </div>
+        </div>
+
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Orders Management</h1>
+                    <p>Streamline fulfillment, manage returns, and track sales performance.</p>
+                </div>
+            </div>
+
+            <div class="stats-cards">
+                <div class="card">
+                    <img src="assets/images/icons/done.png" alt="">
+                    <h3>Confirmed</h3>
+                    <p></p>
+                </div>
+
+                <div class="card">
+                    <img src="assets/images/icons//file.png" alt="">
+                    <h3>Pending Orders</h3>
+                    <p></p>
+                </div>
+
+                <div class="card">
+                    <img src="assets/images/icons/return-box.png" alt="">
+                    <h3>Return Requests</h3>
+                    <p></p>
+                </div>
+                <div class="card">
+                    <img src="assets/images/icons/reject.png" alt="">
+                    <h3>Rejected</h3>
+                    <p></p>
+                </div>
+            </div>
+
+
+
+
+            <div class="orders-table">
+
+                <div class="filter">
+                    <label for="statusFilter">Filter by status:</label>
+                    <select id="statusFilter">
+                        <option value="all">All</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Return Requests">Return Requests</option>
+                        <option value="Rejected">Rejected</option>
+                    </select>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>CUSTOMER</th>
+                            <th>AMOUNT</th>
+                            <th>DATE</th>
+                            <th>STATUS</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersBody">
+
+                    </tbody>
+                </table>
+
+            </div>
+
+            
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <p id="popupText"></p>
+
+                    <div class="actions">
+                        <button id="okBtn">OK</button>
+                        <button id="cancelBtn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <script type="module" src="/assets//js/links.js"></script>
+    <script type="module" src="/assets/js/orderAdmin.js"></script>
+</body>
+
+</html>

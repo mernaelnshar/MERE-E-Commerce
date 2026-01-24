@@ -1,73 +1,30 @@
-const menuLinks = document.querySelectorAll('.sidebar .menu a');
+import {db, collection, getDocs, query, where , doc , getDoc , setDoc , addDoc , updateDoc} from "./firebase.js";
 
-menuLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        menuLinks.forEach(l => l.classList.remove('active')); // شيل الكلاس من كل الروابط
-        link.classList.add('active'); // ضيف الكلاس على الرابط اللي اتضغط
-    });
-});
+const totalProductsEl = document.getElementById("totalProducts");
+const totalCategoriesEl = document.getElementById("totalCategories");
+const pendingOrdersEl = document.getElementById("pendingOrders");
 
-let rows = document.querySelectorAll('.orders-table tbody tr');
-let viewMoreBtn = document.getElementById('viewMoreBtn');
-
-
-
-if (rows.length > 3) {
-    for (let i = 3; i < rows.length; i++) {
-        rows[i].style.display = 'none';
-    }
-} else {
-    viewMoreBtn.style.display = 'none';
+async function getTotalProducts() {
+    const snapshot = await getDocs(collection(db,"products"));
+    totalProductsEl.innerText = snapshot.size;
 }
 
-viewMoreBtn.addEventListener('click', function () {
-    for (let row of rows) {
-        row.style.display = 'table-row';
-    }
-    viewMoreBtn.style.display = 'none';
-});
-
-
-// *****************************************************************
-
-
-const confirmBtn = document.querySelector(".confirm");
-const rejectBtn = document.querySelector(".reject");
-const popup = document.getElementById("popup");
-const popupText = document.getElementById("popupText");
-const rejectReason = document.getElementById("rejectReason");
-const okBtn = document.getElementById("okBtn");
-
-let actionType = "";
-
-confirmBtn.onclick = () => {
-    actionType = "confirm";
-    popupText.innerText = "Approved Successfully";
-    rejectReason.style.display = "none";
-    popup.style.display = "flex";
-};
-
-rejectBtn.onclick = () => {
-    actionType = "reject";
-    popupText.innerText = "Please enter rejection reason";
-    rejectReason.style.display = "block";
-    popup.style.display = "flex";
-};
-
-okBtn.onclick = () => {
-    if (actionType === "reject") {
-        if (rejectReason.value === "") {
-            alert("Please write the reason");
-            return;
-        }
-        alert("Rejected because: " + rejectReason.value);
-        rejectReason.value = "";
-    }
-    closePopup();
-};
-
-function closePopup() {
-    rejectReason.value = "";
-    popup.style.display = "none";
+async function getTotalCategories() {
+    const snapshot = await getDocs(collection(db,"categories"));
+    totalCategoriesEl.innerText = snapshot.size;
 }
 
+async function getPendingOrders() {
+    const q = query(collection(db,"orders") , where("status" , "==" , "pending"));
+    const snapshot = await getDocs(q);
+    pendingOrdersEl.innerText = snapshot.size;
+    
+}
+
+getTotalProducts();
+getTotalCategories();
+getPendingOrders();
+
+
+
+// *************************************************************************
