@@ -149,11 +149,7 @@ document.getElementById("checkoutBtn").addEventListener("click", async () => {
     localStorage.removeItem("cart");
     renderCart();
     alert("Order placed successfully ✅");
-<<<<<<< HEAD
-    window.location.href = "/order.html";
-=======
     window.location.href = "order.html";
->>>>>>> d0afe1621dc1d5a5f821b56b1fcef79cb8674b41
   } catch (err) {
     console.error("Error saving order:", err);
     alert("Failed to place order");

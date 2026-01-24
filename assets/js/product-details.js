@@ -1,19 +1,12 @@
-import { db, collection, getDocs, doc, setDoc, getDoc } from "./firebase/firebase.js";
-import { getAuth, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import {
-  query,
-  where,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import { db, auth, collection, getDocs, doc, setDoc, getDoc, query, where, orderBy, onAuthStateChanged } from "./firebase.js";
 
 
-var auth = getAuth();
 var productRef = collection(db, "products");
 
 var reviewsRef = collection(db, "reviews");
 var reviewsMap = {};
-var mainContent=document.querySelector('.main')
+var mainContent = document.querySelector('.main')
 var rating = 0;
 
 var params = new URLSearchParams(window.location.search);
@@ -31,64 +24,64 @@ async function getProductDetails() {
     mainContent.innerHTML = `<p style="padding:20px;font-size:18px;">No product with this id</p>`;
     return;
   }
-  
+
   var product = snap.data();
   // breadcrumb
-  var catNameEl   = document.querySelector("#catName");
+  var catNameEl = document.querySelector("#catName");
   catNameEl.textContent = `${product.category}`;
-  var proNameEl   = document.querySelector("#proName");
+  var proNameEl = document.querySelector("#proName");
   proNameEl.textContent = `${product.title}`;
-  
+
   // main product section
-  var productImgEl   = document.querySelector(".main-image img");
+  var productImgEl = document.querySelector(".main-image img");
   productImgEl.src = `${product.imageURL}`;
   var productTitleEl = document.querySelector(".details h3");
   productTitleEl.textContent = `${product.title}`;
   var productPriceEl = document.querySelector(".price span");
   productPriceEl.textContent = `$${product.price}`;
-  var stockStatusEl  = document.querySelector(".stock-desc span");
-  var unitsEl        = document.querySelector("#units");
-  if (product.stock){
-    stockStatusEl.style.color='green'
-    unitsEl.textContent=`${product.stock}`
-    }
-    else{
-      stockStatusEl.style.color='red'
-      unitsEl.textContent='0'
-      unitsEl.style.color='red'
-      }
+  var stockStatusEl = document.querySelector(".stock-desc span");
+  var unitsEl = document.querySelector("#units");
+  if (product.stock) {
+    stockStatusEl.style.color = 'green'
+    unitsEl.textContent = `${product.stock}`
+  }
+  else {
+    stockStatusEl.style.color = 'red'
+    unitsEl.textContent = '0'
+    unitsEl.style.color = 'red'
+  }
 
   // buttons
-  var addToCartBtn   = document.querySelector(".addtocart");
-      addToCartBtn.addEventListener("click", function () {
-        addToCart(snap.id);
-    });
+  var addToCartBtn = document.querySelector(".addtocart");
+  addToCartBtn.addEventListener("click", function () {
+    addToCart(snap.id);
+  });
 
-  var addToWishBtn   = document.querySelector(".addtowishlist");
-      addToWishBtn.addEventListener('click',function(){
-        addToWishList(product,snap.id)
-    })
-  
+  var addToWishBtn = document.querySelector(".addtowishlist");
+  addToWishBtn.addEventListener('click', function () {
+    addToWishList(product, snap.id)
+  })
+
   // description
-  var descTextEl     = document.querySelector(".description p");
+  var descTextEl = document.querySelector(".description p");
   descTextEl.textContent = `${product.description}`;
 
   // rating / reviews 
-  var ratingDiv=createStarRating(reviewsMap.avg,reviewsMap.count)
+  var ratingDiv = createStarRating(reviewsMap.avg, reviewsMap.count)
   var rate = document.querySelector(".details .rate")
-    rate.appendChild(ratingDiv)
+  rate.appendChild(ratingDiv)
 
   // customer feedback
   var commentTextarea = document.querySelector("#comment");
   var submitReviewBtn = document.querySelector(".submit-a a");
-  submitReviewBtn.addEventListener('click',function(){
-    var comment=commentTextarea.value
-    createreview(comment,snap.id,rating)
+  submitReviewBtn.addEventListener('click', function () {
+    var comment = commentTextarea.value
+    createreview(comment, snap.id, rating)
   })
 
 
 
-    await renderReviews(snap.id);
+  await renderReviews(snap.id);
 
 }
 
@@ -104,23 +97,23 @@ async function getReviews() {
   snapshot.forEach((doc) => {
     var data = doc.data();
     var reveId = data.productId;
-    if(reveId==productId){
+    if (reveId == productId) {
       if (!temp[reveId]) temp[reveId] = { total: 0, count: 0 };
-    temp[reveId].total += data.rating;
-    temp[reveId].count++;
+      temp[reveId].total += data.rating;
+      temp[reveId].count++;
     }
-    
+
   });
 
-    if (temp[productId]) {
+  if (temp[productId]) {
     reviewsMap = {
       avg: Number((temp[productId].total / temp[productId].count).toFixed(1)),
       count: temp[productId].count
     };
-    } 
-    else {
-      reviewsMap = { avg: 0, count: 0 };
-    }
+  }
+  else {
+    reviewsMap = { avg: 0, count: 0 };
+  }
 
 
 }
@@ -142,7 +135,7 @@ async function getProductReviews(productId) {
 
 async function renderReviews(productId) {
   const reviewsContainer = document.querySelector(".allreviewcustomers");
-  reviewsContainer.innerHTML = ""; 
+  reviewsContainer.innerHTML = "";
 
   const reviews = await getProductReviews(productId);
 
@@ -189,7 +182,7 @@ function createStarRating(avg = 0, count = 0) {
 
   var fullStars = Math.floor(avg);
   var hasHalf = avg - fullStars >= 0.5;
-    // debugger
+  // debugger
   for (var i = 1; i <= 5; i++) {
     var star = document.createElement("i");
 
@@ -212,30 +205,30 @@ function createStarRating(avg = 0, count = 0) {
 }
 
 async function addToCart(productId) {
-  var user = await getCurrentUser();
+  try {
+      var user = auth.currentUser;
 
-  if (!user) {
-    alert("Please login first!");
-    return;
+    var cart = JSON.parse(localStorage.getItem("Cart")) || [];
+    var index = -1
+    index = cart.findIndex(
+      item => item.Product === productId && item.userid === user.uid
+    );
+
+    if (index === -1) {
+      cart.push({
+        userid: user.uid,
+        Product: productId,
+        Quantity: 1
+      });
+    } else {
+      cart[index].Quantity++;
+    }
+
+    localStorage.setItem("Cart", JSON.stringify(cart));
+  } catch {
+    console.log(alert("Please login first!"));
   }
 
-  var cart = JSON.parse(localStorage.getItem("Cart")) || [];
-  var index=-1
-  index = cart.findIndex(
-    item => item.Product === productId && item.userid === user.uid
-  );
-
-  if (index === -1) {
-    cart.push({
-      userid: user.uid,
-      Product: productId,
-      Quantity: 1
-    });
-  } else {
-    cart[index].Quantity++;
-  }
-
-  localStorage.setItem("Cart", JSON.stringify(cart));
 }
 async function createreview(comment, proId, rate) {
   if (!comment || !proId || !rate) {
@@ -243,42 +236,42 @@ async function createreview(comment, proId, rate) {
     return;
   }
   var user = auth.currentUser;
-  
 
-    var reviewRef = doc(collection(db, "reviews"));
-    await setDoc(reviewRef, {
-      comment: comment,
-      productId: proId,
-      rating: Number(rate),
-      userid: user.uid,
-      username: user.displayName,
-      createdAt: new Date() 
-    });
 
-    alert("Review submitted successfully!");
+  var reviewRef = doc(collection(db, "reviews"));
+  await setDoc(reviewRef, {
+    comment: comment,
+    productId: proId,
+    rating: Number(rate),
+    userid: user.uid,
+    username: user.displayName,
+    createdAt: new Date()
+  });
 
-    await getReviews();
-    var rateDiv = document.querySelector(".details .rate .star-rating");
-    if (rateDiv) rateDiv.remove();
-    var ratingDiv = createStarRating(reviewsMap.avg, reviewsMap.count);
-    document.querySelector(".details .rate").appendChild(ratingDiv);
+  alert("Review submitted successfully!");
 
-    document.querySelector("#comment").value = "";
-    rating = 0;
+  await getReviews();
+  var rateDiv = document.querySelector(".details .rate .star-rating");
+  if (rateDiv) rateDiv.remove();
+  var ratingDiv = createStarRating(reviewsMap.avg, reviewsMap.count);
+  document.querySelector(".details .rate").appendChild(ratingDiv);
+
+  document.querySelector("#comment").value = "";
+  rating = 0;
 
 
 }
 
 
-async function addToWishList(proWish,proWishId) {
-  var user = await getCurrentUser();
+async function addToWishList(proWish, proWishId) {
+  var user = auth.currentUser;
 
   if (!user) {
     alert("Please login first!");
     return;
   }
 
-  var wishRef = doc(db,"wishlists",user.uid,"ProductWishlist",proWishId);
+  var wishRef = doc(db, "wishlists", user.uid, "ProductWishlist", proWishId);
 
   var wishSnap = await getDoc(wishRef);
 
@@ -302,30 +295,30 @@ const stars = document.querySelectorAll('.stars i');
 
 
 stars.forEach(star => {
-    star.addEventListener('click', () => {
-        rating = star.getAttribute('data-value');
-        updateStars(rating);
-    });
+  star.addEventListener('click', () => {
+    rating = star.getAttribute('data-value');
+    updateStars(rating);
+  });
 
-    star.addEventListener('mouseover', () => {
-        updateStars(star.getAttribute('data-value'));
-    });
+  star.addEventListener('mouseover', () => {
+    updateStars(star.getAttribute('data-value'));
+  });
 
-    star.addEventListener('mouseout', () => {
-        updateStars(rating);
-    });
+  star.addEventListener('mouseout', () => {
+    updateStars(rating);
+  });
 });
 
 function updateStars(value) {
-    stars.forEach(star => {
-        if (star.getAttribute('data-value') <= value) {
-            star.classList.add('filled');
-            star.classList.replace('fa-regular','fa-solid');
-        } else {
-            star.classList.remove('filled');
-            star.classList.replace('fa-solid','fa-regular');
-        }
-    });
+  stars.forEach(star => {
+    if (star.getAttribute('data-value') <= value) {
+      star.classList.add('filled');
+      star.classList.replace('fa-regular', 'fa-solid');
+    } else {
+      star.classList.remove('filled');
+      star.classList.replace('fa-solid', 'fa-regular');
+    }
+  });
 }
 
 

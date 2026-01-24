@@ -22,7 +22,8 @@ import {
   deleteDoc,
   query,
   limit,
-  where
+  where,
+  orderBy   
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // Firebase Config
@@ -65,7 +66,8 @@ export {
   deleteDoc,
   query,
   limit,
-  where
+  where,
+  orderBy   
 };
 
 
