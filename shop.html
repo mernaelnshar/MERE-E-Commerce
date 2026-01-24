@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Boutique Store – Shopping Cart</title>
+    <link rel="stylesheet" href="assets/css/shopStyle.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <!-- ================= NAVBAR ================= -->
+    <!-- Navbar -->
+    <nav class="navbar">
+      <img
+        src="assets/images/logos/logo.png"
+        alt="Go Shop Logo"
+        class="logo-img"
+      />
+
+      <ul class="nav-links">
+        <li>
+          <a href="products.html"> <i class="fa-solid fa-store"></i> Shop </a>
+        </li>
+        <li>
+          <a href="wishPage.html"> <i class="fa-solid fa-heart"></i> Wishlist </a>
+        </li>
+        <li>
+          <a href="order.html"> <i class="fa-solid fa-box-open"></i> Orders </a>
+        </li>
+        <li>
+          <a href="shop.html"> <i class="fa-solid fa-cart-shopping"></i>Carts </a>
+        </li>
+      </ul>
+
+      <button class="logout-btn" onclick="window.location.href = 'login.html'">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    </nav>
+
+    <!-- ================= BREADCRUMB ================= -->
+    <section class="breadcrumb">Home › <strong>Shopping Cart</strong></section>
+
+    <!-- ================= MAIN ================= -->
+    <main class="container">
+      <!-- ===== CART ===== -->
+      <section class="cart-section">
+        <h1>Shopping Cart</h1>
+        <br />
+
+        <!-- CART ITEMS WILL BE RENDERED BY JS -->
+        <div id="cartItems"></div>
+
+        <!-- EMPTY CART MESSAGE -->
+        <p id="emptyCart" style="display: none">Your cart is empty 🛒</p>
+      </section>
+
+      <!-- ================= ORDER SUMMARY ================= -->
+      <aside class="summary">
+        <h2>Order Summary</h2>
+
+        <div class="row">
+          <span>Subtotal</span>
+          <span id="subtotal">$0.00</span>
+        </div>
+
+        <div class="row">
+          <span>Estimated Shipping</span>
+          <span class="green">Free</span>
+        </div>
+
+        <div class="row">
+          <span>Tax</span>
+          <span id="tax">$0.00</span>
+        </div>
+
+        <hr />
+
+        <div class="total">
+          <span>Total</span>
+          <span id="total">$0.00</span>
+        </div>
+
+        <button class="checkout" id="checkoutBtn">Proceed to Checkout →</button>
+        <br />
+        <br />
+        <div class="trust">
+          <span>🔒 Secure SSL</span>
+          <span>✔ Trusted</span>
+          <span>🚚 Fast Delivery</span>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ================= RECOMMENDATIONS ================= -->
+    <section class="recommend">
+      <h2>You might also like</h2>
+
+      <div class="cards">
+        <div class="card">
+          <img src="../../assets/redShoe.png" />
+          <h4>Pro Runner X1</h4>
+          <p>$120.00</p>
+        </div>
+
+        <div class="card">
+          <img src="../../assets/glasses.png" />
+          <h4>Classic Aviators</h4>
+          <p>$180.00</p>
+        </div>
+
+        <div class="card">
+          <img src="../../assets/smartWatch.png" />
+          <h4>Zenith Smartwatch</h4>
+          <p>$299.00</p>
+        </div>
+
+        <div class="card">
+          <img src="../../assets/headphone.png" />
+          <h4>Acoustics Pro Headset</h4>
+          <p>$250.00</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <!-- Footer -->
+    <footer class="footer-dark">
+      <div class="footer-container">
+        <div class="footer-col">
+          <h3 class="footer-logo">Go Shop</h3>
+          <p class="footer-desc">
+            Your premier destination for modern shopping. We offer the best
+            products at the best prices with exceptional delivery service.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">New Arrivals</a></li>
+            <li><a href="#">Return Policy</a></li>
+            <li><a href="#">About Us</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect With Us</h4>
+          <div class="social-row">
+            <a href="#" class="social-btn facebook"
+              ><i class="fa-brands fa-facebook-f"></i
+            ></a>
+            <a href="#" class="social-btn instagram"
+              ><i class="fa-brands fa-instagram"></i
+            ></a>
+            <a href="#" class="social-btn whatsapp"
+              ><i class="fa-brands fa-whatsapp"></i
+            ></a>
+          </div>
+          <p class="contact-info">
+            <a href="mail to: support@goshop.com" class="contact-info">
+              <i class="fa-solid fa-envelope"></i> support@goshop.com</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Go Shop. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script type="module" src="assets/js/script.js"></script>
+  </body>
+</html>

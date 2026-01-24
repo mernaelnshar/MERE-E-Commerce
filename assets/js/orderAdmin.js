@@ -34,12 +34,12 @@ async function loadOrders() {
         const order = docSnap.data();
         const id = docSnap.id;
 
-        // count cards
+        
         if (counts[order.status] !== undefined) {
             counts[order.status]++;
         }
 
-        // actions
+        
         let actions = "";
 
         if (order.status === "pending") {
@@ -84,14 +84,14 @@ ordersBody.addEventListener("click", async (e) => {
 
     currentOrderId = orderId;
 
-    // CONFIRM
+    
     if (e.target.classList.contains("confirm")) {
         currentAction = "confirm";
         popupText.innerText = "Are you sure you want to confirm this order?";
         popup.style.display = "flex"; // نفتح البوب اب
     }
 
-    // REJECT
+    
     if (e.target.classList.contains("reject")) {
         currentAction = "reject";
         popupText.innerText = "Are you sure you want to reject this order?";
@@ -99,7 +99,7 @@ ordersBody.addEventListener("click", async (e) => {
     }
 });
 
-// زرار OK
+
 okBtn.addEventListener("click", async () => {
     if (!currentOrderId) return;
 
@@ -115,13 +115,13 @@ okBtn.addEventListener("click", async () => {
         });
     }
 
-    popup.style.display = "none"; // إغلاق البوب اب
+    popup.style.display = "none"; 
     loadOrders();
     currentOrderId = null;
     currentAction = null;
 });
 
-// زرار Cancel
+
 cancelBtn.addEventListener("click", () => {
     popup.style.display = "none";
     currentOrderId = null;
@@ -139,16 +139,16 @@ function formatStatus(status) {
 }
 
 filterSelect.addEventListener("change", function () {
-  const selected = this.value;
-  const rows = ordersBody.querySelectorAll("tr");
+    const selected = this.value;
+    const rows = ordersBody.querySelectorAll("tr");
 
-  rows.forEach(row => {
+    rows.forEach(row => {
     const status = row.dataset.status;
 
     if (selected === "all" || status === selected) {
-      row.style.display = "";
+        row.style.display = "";
     } else {
-      row.style.display = "none";
+        row.style.display = "none";
     }
-  });
+    });
 });
