@@ -5,4 +5,7 @@ const links = document.querySelectorAll(".menu a");
         if (link.getAttribute("href") === currentPage) {
             link.classList.add("active");
         }
+        
     });
+
+    

@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Orders Details</title>
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/orderAdmin.css">
+
 </head>
 
 <body>
 
-    
     <div class="navbar">
         <div class="logo">
             <img src="assets/images/logos/logo.png" alt="Logo" class="logo-img">
@@ -18,9 +19,11 @@
         <div class="user-info">
             <div class="userType"><span>ADMIN</span></div>
         </div>
+
     </div>
+
     <div class="container">
-        
+        <!-- Sidebar -->
         <div class="sidebar">
             <ul class="menu">
                 <li><a href="dashboard.html">
@@ -49,39 +52,59 @@
             </div>
         </div>
 
-        
+
+        <!-- Main Content -->
         <div class="main-content">
             <div class="header">
                 <div>
-                    <h1>Store Analytics</h1>
-                    <p>Real-time summary of your marketplace operations.</p>
+                    <h1>Orders Details</h1>
                 </div>
             </div>
 
-            <div class="stats-cards">
-                <div class="card">
-                    <img src="assets/images/icons/done.png" alt="">
-                    <h3>Total Products</h3>
-                    <p id="totalProducts">0</p>
+            <div class="orders-table">
+
+                <div class="filter">
+                    <select id="statusFilter">
+                        <option value="all">All Orders</option>
+                    </select>
+
                 </div>
 
-                <div class="card">
-                    <img src="assets/images/icons/apps.png" alt="">
-                    <h3>Total Categories</h3>
-                    <p id="totalCategories">0</p>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersBody">
 
-                <div class="card">
-                    <img src="assets/images/icons/file.png" alt="">
-                    <h3>Pending Orders</h3>
-                    <p id="pendingOrders">0</p>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <p id="popupText"></p>
+
+                    <div class="actions">
+                        <button id="okBtn">OK</button>
+                        <button id="cancelBtn">Cancel</button>
+                    </div>
                 </div>
             </div>
+
+
         </div>
+
+
     </div>
     <script type="module" src="/assets//js/links.js"></script>
-    <script type="module"  src="/assets/js/dashboard.js"></script>
-    
+    <script type="module" src="/assets/js/orderDetails.js"></script>
 </body>
 
 </html>

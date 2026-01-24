@@ -17,7 +17,6 @@
         </div>
 
         <div class="user-info">
-            <div class="userName"><span>Alex Rivera</span></div>
             <div class="userType"><span>ADMIN</span></div>
         </div>
     </div>
@@ -27,43 +26,34 @@
         
         <div class="sidebar">
             <ul class="menu">
-                <li>
-                    <a href="dashboard.html">
-                        <img src="assets/images/icons/menu.png" class="menu-icon">
-                        Dashboard
-                    </a>
+                <li><a href="dashboard.html">
+                        <img src="assets/images/icons/menu.png" alt="Dashboard Icon" class="menu-icon">
+                        Dashboard</a>
                 </li>
-
-                <li>
-                    <a href="productAdmin.html" class="active">
-                        <img src="assets/images/icons/archive.png" class="menu-icon">
-                        Product Management
-                    </a>
+                <li><a href="productAdmin.html">
+                        <img src="assets/images/icons/archive.png" alt="Product Icon" class="menu-icon">
+                        Product Management</a>
                 </li>
-
-                <li>
-                    <a href="categorieAdmin.html">
-                        <img src="assets/images/icons/shapes.png" class="menu-icon">
-                        Category Management
-                    </a>
+                <li><a href="categorieAdmin.html">
+                        <img src="assets/images/icons/shapes.png" alt="Category Icon" class="menu-icon">
+                        Category Management</a>
                 </li>
-
-                <li>
-                    <a href="orderAdmin.html">
-                        <img src="assets/images/icons/done.png" class="menu-icon">
-                        Order Management
-                    </a>
+                <li><a href="orderAdmin.html">
+                        <img src="assets/images/icons/done.png" alt="Category Icon" class="menu-icon">
+                        Order Management</a>
+                </li>
+                <li><a href="orderDetails.html">
+                        <img src="assets/images/icons/file.png" alt="Category Icon" class="menu-icon">
+                        Orders Details </a>
                 </li>
             </ul>
-
             <div class="signout">
-                <button>Sign Out</button>
+                <button onclick="window.location='login.html'" >Sign Out</button>
             </div>
         </div>
 
         
         <div class="main-content">
-
             
             <div class="header">
                 <div>
@@ -81,6 +71,7 @@
                 </select>
             </div>
 
+            
             <table class="products-table">
                 <thead>
                     <tr>
@@ -101,6 +92,7 @@
         </div>
     </div>
 
+    
     <div class="modal" id="productModal">
         <div class="modal-content">
             <h3>Add New Product</h3>
@@ -130,6 +122,7 @@
         </div>
     </div>
 
+    
     <div class="modal" id="deleteModal">
         <div class="modal-content">
             <h3>Delete Product</h3>

@@ -128,7 +128,6 @@ confirmDeleteBtn.onclick = async () => {
     }
     deleteModal.style.display = "none";
 };
-
 cancelDeleteBtn.addEventListener("click", () => {
     rowToDelete = null;
     deleteModal.style.display = "none";
