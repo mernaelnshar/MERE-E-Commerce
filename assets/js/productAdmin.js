@@ -61,7 +61,6 @@ async function loadProducts() {
 }
 
 loadProducts();
-
 addProductBtn.addEventListener("click", () => {
     editRow = null;
     editDocId = null;

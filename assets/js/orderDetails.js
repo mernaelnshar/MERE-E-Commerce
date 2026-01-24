@@ -7,8 +7,6 @@ const filterSelect = document.getElementById("statusFilter");
 let currentOrderId = null;
 let currentAction = null;
 
-
-
 async function loadOrders() {
     ordersBody.innerHTML = "";
     filterSelect.innerHTML = `<option value="all">All Orders</option>`;

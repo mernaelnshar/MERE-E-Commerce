@@ -1,5 +1,4 @@
 import { db, collection, getDocs, updateDoc, doc  } from "./firebase.js";
-
 const ordersBody = document.getElementById("ordersBody");
 const filterSelect = document.getElementById("statusFilter");
 
