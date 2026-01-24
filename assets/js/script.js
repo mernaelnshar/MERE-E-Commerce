@@ -163,7 +163,7 @@ document.getElementById("checkoutBtn").addEventListener("click", async () => {
     localStorage.removeItem("cart");
     renderCart();
     alert("Order placed successfully ✅");
-    window.location.href = "../Order Page/order.html";
+    window.location.href = "order.html";
   } catch (err) {
     console.error("Error saving order:", err);
     alert("Failed to place order");
@@ -172,3 +172,4 @@ document.getElementById("checkoutBtn").addEventListener("click", async () => {
 
 // ===== INIT =====
 renderCart();
+
