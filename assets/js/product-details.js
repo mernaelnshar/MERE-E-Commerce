@@ -73,26 +73,32 @@ async function getProductDetails() {
         var stockStatusEl  = document.querySelector(".stock-desc span");
         var unitsEl        = document.querySelector("#units");
         if (product.stock){
-          stockStatusEl.style.color='green'
-          unitsEl.textContent=`${product.stock}`
+            stockStatusEl.style.color='green'
+            unitsEl.textContent=`${product.stock}`
+            var addToCartBtn   = document.querySelector(".addtocart");
+              addToCartBtn.addEventListener("click", function () {
+                addToCart(snap.id);
+                });
+
+
+
           }
           else{
             stockStatusEl.style.color='red'
+            stockStatusEl.textContent='Out Of Stock'
             unitsEl.textContent='0'
             unitsEl.style.color='red'
+            var btnaddtocart=document.querySelector('.btnaddtocart')
+            var addToCartBtn   = document.querySelector(".addtocart");
+            btnaddtocart.style.display='none'
+            addToCartBtn.style.display='none'
             }
 
         // buttons
-        var addToCartBtn   = document.querySelector(".addtocart");
-            addToCartBtn.addEventListener("click", function () {
-              addToCart(snap.id);
-          });
 
-
-            addToWishBtn.addEventListener('click',function(){
-              addToWishList(product,snap.id)
-          })
-        
+        addToWishBtn.addEventListener('click',function(){
+            addToWishList(product,snap.id)
+        })
         // description
         var descTextEl     = document.querySelector(".description p");
         descTextEl.textContent = `${product.description}`;
@@ -351,8 +357,14 @@ function updateStars(value) {
 
 
 onAuthStateChanged(auth, async (user) => {
+    if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
   await getReviews();
   getProductDetails();
+  document.body.style.display = "block";
 
 
 

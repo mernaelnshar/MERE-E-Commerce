@@ -152,24 +152,26 @@ function renderProducts(products,...pass) {
     // console.log(reviewData.avg )
 
     // add to cart
-    var addToCartDiv = document.createElement("div");
-    addToCartDiv.className = "addToCard";
+    if(product.stock>0){
+        var addToCartDiv = document.createElement("div");
+        addToCartDiv.className = "addToCard";
 
-    var btn = document.createElement("button");
-    btn.style.color='#ffffff'
+        var btn = document.createElement("button");
+        btn.style.color='#ffffff'
 
-    var icon = document.createElement("i");
-    icon.className = "fas fa-cart-shopping";
-    icon.style.color='white'
+        var icon = document.createElement("i");
+        icon.className = "fas fa-cart-shopping";
+        icon.style.color='white'
 
-    btn.appendChild(icon);
-    btn.appendChild(document.createTextNode(" Quick Add"));
-    addToCartDiv.appendChild(btn);
+        btn.appendChild(icon);
+        btn.appendChild(document.createTextNode(" Quick Add"));
+        addToCartDiv.appendChild(btn);
 
-    btn.addEventListener("click", function () {
-        
-        addToCart(product.id);
-    });
+        btn.addEventListener("click", function () {
+            
+            addToCart(product.id);
+        });
+      }
 
     // wishlist
     var addToWishListDiv = document.createElement("div");
@@ -192,7 +194,10 @@ function renderProducts(products,...pass) {
     productDiv.appendChild(priceTitleDiv);
     productDiv.appendChild(desc);
     productDiv.appendChild(ratingDiv);
-    productDiv.appendChild(addToCartDiv);
+    if (product.stock) {
+      productDiv.appendChild(addToCartDiv);
+      
+    }
     productDiv.appendChild(addToWishListDiv);
     title.addEventListener('click',function(){
         location.assign(`product-details.html?id=${product.id}`)

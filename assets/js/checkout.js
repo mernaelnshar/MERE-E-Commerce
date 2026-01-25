@@ -73,7 +73,7 @@ async function renderCart() {
     const productSnap = await getDoc(doc(db, "products", item.Product));
     if (!productSnap.exists()) continue;
     
-    const product = productSnap.data();
+    const product = productSnap.data(); 
     const itemTotal = product.price * item.Quantity;
     subtotal += itemTotal;
 
@@ -182,7 +182,10 @@ document.getElementById("checkoutBtn").addEventListener("click", async () => {
     const product = productSnap.data();
     const itemTotal = product.price * cartItem.Quantity;
     total += itemTotal;
-
+    var newStoc= product.stock-cartItem.Quantity ||0
+    await updateDoc(doc(db, "products", productSnap.id), {
+    stock: newStoc
+    });
     await addDoc(
       collection(db, "orders", orderRef.id, "items"),
       {
@@ -198,7 +201,6 @@ document.getElementById("checkoutBtn").addEventListener("click", async () => {
     total: total
   });
 
-  // 4️⃣ مسح Cart للمستخدم
   const rest = getCart().filter(
     item => item.userid !== user.uid
   );
