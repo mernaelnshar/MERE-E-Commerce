@@ -14,18 +14,16 @@
 }
 
 body {
-  background: var(--bg-light);
-  color: #111;
-  height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100vh; 
 }
 
 main {
-  flex: 1;
+  flex: 1; 
 }
 
-.logo {
+/* .logo {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -42,7 +40,8 @@ main {
   height: 40px;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
-}
+} */
+
 
 /* Navbar */
 .navbar {
