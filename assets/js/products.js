@@ -7,7 +7,7 @@ import {
   setDoc,
   getDoc,
   onAuthStateChanged,signOut
-} from "./firebase/firebase.js"; 
+} from "./firebase.js"; 
 
 
 
@@ -61,7 +61,7 @@ async function getCategories() {
     //  icon
     var iconSpan = document.createElement("span");
     var iconImg = document.createElement("img");
-    iconImg.src = cat.icon || "./logos/armchair.png";
+    iconImg.src = cat.icon || "assets/armchair.png";
     iconImg.alt = cat.name;
     iconSpan.appendChild(iconImg);
 

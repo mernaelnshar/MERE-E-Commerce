@@ -9,7 +9,7 @@ import {
   updateDoc,
   getDoc,
   onAuthStateChanged,signOut,addDoc
-} from "./firebase/firebase.js"; 
+} from "./firebase.js"; 
 function requireAuth() {
     const user = auth.currentUser;
     if (!user) {
