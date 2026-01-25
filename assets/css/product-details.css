@@ -7,6 +7,7 @@
 }
 body{
     background-color: #f2f2f2;
+    display:none;
 }
 
 
@@ -87,6 +88,7 @@ body{
     border: #f2f2f2;
     margin-left: auto;
     margin-right: auto;
+    
 
 }
 .nav-link-ineer{
