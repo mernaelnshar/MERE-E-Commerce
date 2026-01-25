@@ -16,11 +16,13 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; 
+  min-height: 100vh;
+  background: var(--bg-light);
+  color: #111;
 }
 
 main {
-  flex: 1; 
+  flex: 1;
 }
 
 /* .logo {
@@ -41,7 +43,6 @@ main {
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
 } */
-
 
 /* Navbar */
 .navbar {
