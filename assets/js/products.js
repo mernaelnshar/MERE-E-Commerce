@@ -195,7 +195,7 @@ function renderProducts(products,...pass) {
     productDiv.appendChild(priceTitleDiv);
     productDiv.appendChild(desc);
     productDiv.appendChild(ratingDiv);
-    if (product.stock) {
+    if (product.stock>0) {
       productDiv.appendChild(addToCartDiv);
       
     }
@@ -373,6 +373,7 @@ onAuthStateChanged(auth, async (user) => {
     setupDone = true;
   }
 });
+
 
 
 
