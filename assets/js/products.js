@@ -61,7 +61,7 @@ async function getCategories() {
     //  icon
     var iconSpan = document.createElement("span");
     var iconImg = document.createElement("img");
-    iconImg.src = cat.icon || "assets/armchair.png";
+    iconImg.src = cat.icon || "assets/images/icons/armchair.png";
     iconImg.alt = cat.name;
     iconSpan.appendChild(iconImg);
 
