@@ -1,5 +1,3 @@
-
-
 import { 
   db,
   auth,
@@ -19,6 +17,7 @@ function requireAuth() {
     }
     return user;
 }
+
 document.querySelector(".logout-btn").addEventListener("click", async () => {
     try {
         await signOut(auth); 

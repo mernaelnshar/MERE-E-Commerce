@@ -1,4 +1,16 @@
-import {db, collection, getDocs, query, where , doc , getDoc , setDoc , addDoc , updateDoc} from "./firebase.js";
+import {db, collection, getDocs, query, where , doc , getDoc , setDoc , addDoc , updateDoc , signOut} from "./firebase.js";
+
+document.querySelector(".logout-btn").addEventListener("click", async () => {
+    try {
+        await signOut(auth); 
+        alert("You have been logged out.");
+        window.location.href = "login.html"; 
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("Error logging out. Please try again.");
+    }
+});
+
 
 const totalProductsEl = document.getElementById("totalProducts");
 const totalCategoriesEl = document.getElementById("totalCategories");

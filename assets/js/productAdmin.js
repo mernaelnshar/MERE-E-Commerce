@@ -1,5 +1,15 @@
-import { db, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc } from "./firebase.js";
+import { db, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc , signOut} from "./firebase.js";
 
+document.querySelector(".logout-btn").addEventListener("click", async () => {
+    try {
+        await signOut(auth); 
+        alert("You have been logged out.");
+        window.location.href = "login.html"; 
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("Error logging out. Please try again.");
+    }
+});
 
 const productsBody = document.getElementById("productsBody");
 const productModal = document.getElementById("productModal");

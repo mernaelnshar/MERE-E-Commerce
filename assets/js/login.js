@@ -19,6 +19,9 @@ const db = getFirestore(app);
 const adminRegex = /^(?=.*\d)[a-zA-Z0-9._%+-]+@eud\.com$/;
 const customerRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
+// ✅ Password Regex: حروف + أرقام + رموز عادي (8 أو أكثر)
+const passwordRegex = /^[A-Za-z\d@$!%*?&._#^+=-]{8,}$/;
+
 const loginTab = document.getElementById("loginTab");
 const registerTab = document.getElementById("registerTab");
 const title = document.getElementById("title");
@@ -104,9 +107,14 @@ authForm.addEventListener("submit", async (e) => {
   const confirm = confirmPassword.value.trim();
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
-  const passValid = pass.length >= 8;
-  const nameValid = mode === "login" ? true : name.length > 0;
-  const confirmValid = mode === "login" ? true : (confirm === pass && confirm.length >= 8);
+
+  // ✅ تعديل التحقق من الباسورد: طول + Regex (حروف/أرقام/رموز)
+  const passValid = passwordRegex.test(pass);
+
+  // ✅ تعديل شرط الاسم: مايقبلش أقل من 4 حروف
+  const nameValid = mode === "login" ? true : name.length >= 4;
+
+  const confirmValid = mode === "login" ? true : (confirm === pass && passwordRegex.test(confirm));
 
   showError(emailError, !emailValid);
   showError(passError, !passValid);
@@ -117,7 +125,7 @@ authForm.addEventListener("submit", async (e) => {
 
   const role = detectRole(mail);
   if (role === "unknown") {
-    showMsg("Invalid email format. Use @gmail.com", "fail");
+    showMsg("Invalid email format. Use @gmail.com or @eud.com", "fail");
     return;
   }
 

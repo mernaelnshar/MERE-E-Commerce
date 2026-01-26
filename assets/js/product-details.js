@@ -14,7 +14,6 @@ import {
   orderBy
 } from "./firebase/firebase.js";
 
-
 document.querySelector(".logout-btn").addEventListener("click", async () => {
     try {
         await signOut(auth);  

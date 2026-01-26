@@ -1,4 +1,15 @@
-import { auth, db, onAuthStateChanged, collection, getDocs } from "./firebase.js";
+import { auth, db, onAuthStateChanged, collection, getDocs , signOut } from "./firebase.js";
+
+document.querySelector(".logout-btn").addEventListener("click", async () => {
+    try {
+        await signOut(auth); 
+        alert("You have been logged out.");
+        window.location.href = "login.html"; 
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("Error logging out. Please try again.");
+    }
+});
 
 // ===== SELECT CONTAINER =====
 const wishlistContainer = document.getElementById("wishlistContainer");

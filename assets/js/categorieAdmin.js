@@ -1,4 +1,4 @@
-import { db, collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc } from "./firebase.js";
+import { db, collection, getDocs, getDoc, addDoc, updateDoc, deleteDoc, doc , signOut } from "./firebase.js";
 
 const categoriesBody = document.getElementById("categoriesBody");
 const categoryModal = document.getElementById("categoryModal");
@@ -14,6 +14,16 @@ let editRow = null;
 let rowToDelete = null;
 let editDocId = null;
 
+document.querySelector(".logout-btn").addEventListener("click", async () => {
+    try {
+        await signOut(auth); 
+        alert("You have been logged out.");
+        window.location.href = "login.html"; 
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("Error logging out. Please try again.");
+    }
+});
 
 async function loadCategories() {
     categoriesBody.innerHTML = "";

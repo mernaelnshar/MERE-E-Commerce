@@ -1,4 +1,17 @@
-import { db, collection, getDocs, updateDoc, doc, getDoc  } from "./firebase.js";
+import { db, collection, getDocs, updateDoc, doc, getDoc , signOut } from "./firebase.js";
+
+document.querySelector(".logout-btn").addEventListener("click", async () => {
+    try {
+        await signOut(auth); 
+        alert("You have been logged out.");
+        window.location.href = "login.html"; 
+    } catch (error) {
+        console.error("Logout error:", error);
+        alert("Error logging out. Please try again.");
+    }
+});
+
+
 const ordersBody = document.getElementById("ordersBody");
 const filterSelect = document.getElementById("statusFilter");
 

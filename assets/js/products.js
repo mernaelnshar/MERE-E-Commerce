@@ -22,6 +22,7 @@ document.querySelector(".logout-btn").addEventListener("click", async () => {
     }
 });
 
+
 var productsRef = collection(db, "products");
 var categoriesRef = collection(db, "categories");
 var section = document.querySelector(".products");
