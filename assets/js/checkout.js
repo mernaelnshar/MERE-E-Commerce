@@ -191,7 +191,8 @@ document.getElementById("checkoutBtn").addEventListener("click", async () => {
         productid: cartItem.Product,
         title: product.title,
         price: product.price,
-        quantity: cartItem.Quantity
+        quantity: cartItem.Quantity,
+        image:product.imageURL,
       }
     );
   }
