@@ -1,117 +1,14 @@
-// import {
-//   db,
-//   collection,
-//   getDocs,
-//   getDoc,
-//   doc,
-//   updateDoc,
-// } from "./firebase.js";
-
-
-
-// const ordersContainer = document.getElementById("ordersContainer");
-
-// // ===== FETCH & RENDER ORDERS =====
-// async function fetchOrders() {
-//   ordersContainer.innerHTML = "<p>Loading orders...</p>";
-
-//   try {
-//     const ordersSnap = await getDocs(collection(db, "orders"));
-//     ordersContainer.innerHTML = "";
-
-//     if (ordersSnap.empty) {
-//       ordersContainer.innerHTML = "<p>No orders found.</p>";
-//       return;
-//     }
-
-//     ordersSnap.forEach((orderDoc) => {
-//       const orderId = orderDoc.id;
-//       const orderData = orderDoc.data();
-//       const items = orderData.items || [];
-
-//       const orderDiv = document.createElement("div");
-//       orderDiv.className = "order-card";
-
-//       let itemsHTML = "";
-
-//       items.forEach((item, index) => {
-//         itemsHTML += `
-//           <li>
-//             <strong>${item.name}</strong> × ${item.quantity} — 
-//             <span id="status-${orderId}-${index}">${orderData.status}</span>
-//             <button class="return-btn" id="return-${orderId}-${index}" ${orderData.status === "pending" ? "enabled" : "disabled"}>
-//               Return Order
-//             </button>
-//             <br>
-//             <br>
-//           </li>
-//         `;
-//       });
-
-//       orderDiv.innerHTML = `
-//         <h3>Order ID: ${orderId}</h3>
-//         <ul>${itemsHTML}</ul>
-//       `;
-
-//       ordersContainer.appendChild(orderDiv);
-
-//       // listeners لكل زرار Return
-//       items.forEach((_, index) => {
-//         const btn = document.getElementById(`return-${orderId}-${index}`);
-//         if (btn) {
-//           btn.addEventListener("click", () => returnProduct(orderId, index));
-//         }
-//       });
-//     });
-//   } catch (err) {
-//     console.error("Error fetching orders:", err);
-//     ordersContainer.innerHTML = "<p>Failed to load orders.</p>";
-//   }
-// }
-
-// // ===== RETURN PRODUCT =====
-// async function returnProduct(orderId, itemIndex) {
-//   try {
-//     const orderRef = doc(db, "orders", orderId);
-//     const orderSnap = await getDoc(orderRef);
-
-//     if (!orderSnap.exists()) {
-//       alert("Order not found");
-//       return;
-//     }
-
-//     const orderData = orderSnap.data();
-//     const items = orderData.items;
-
-//     // تحديث حالة المنتج المطلوب
-//     items[itemIndex].status = "pending to approval";
-
-//     await updateDoc(orderRef, { items });
-
-//     // تحديث UI
-//     document.getElementById(`status-${orderId}-${itemIndex}`).textContent = "pending to approval";
-//     document.getElementById(`return-${orderId}-${itemIndex}`).disabled = true;
-//   } catch (err) {
-//     console.error("Return failed:", err);
-//     alert("Failed to return product");
-//   }
-// }
-
-// // ===== INIT =====
-// fetchOrders();
-
 import {
   db,
   collection,
   getDocs,
   getDoc,
   doc,
-  updateDoc,
+  updateDoc
 } from "./firebase.js";
 
 const ordersContainer = document.getElementById("ordersContainer");
 
-// ===== FETCH & RENDER ORDERS =====
 async function fetchOrders() {
   ordersContainer.innerHTML = "<p>Loading orders...</p>";
 
@@ -124,24 +21,38 @@ async function fetchOrders() {
       return;
     }
 
-    ordersSnap.forEach((orderDoc) => {
+    for (const orderDoc of ordersSnap.docs) {
       const orderId = orderDoc.id;
       const orderData = orderDoc.data();
-      const items = orderData.items || [];
+      const orderStatus = orderData.status; // ✅ check هنا
 
       const orderDiv = document.createElement("div");
       orderDiv.className = "order-card";
 
+      const itemsSnap = await getDocs(
+        collection(db, "orders", orderId, "items")
+      );
+
+      if (itemsSnap.empty) continue;
+
       let itemsHTML = "";
 
-      items.forEach((item, index) => {
+      itemsSnap.forEach((itemDoc) => {
+        const item = itemDoc.data();
+        const itemId = itemDoc.id;
+
         itemsHTML += `
           <li class="item-row">
-            <img src="${item.image || 'assets/images/no-image.png'}" alt="${item.name}" class="item-image">
+            <img src="${item.img}" class="item-image">
             <div class="item-info">
-              <strong>${item.name}</strong> × ${item.quantity}<br>
-              Status: <span id="status-${orderId}-${index}">${item.status}</span><br>
-              <button class="return-btn" id="return-${orderId}-${index}" ${item.status === "pending" ? "" : "disabled"}>
+              <strong>${item.title}</strong>
+              <span>Price: ${item.price}</span>
+              <span>Status: ${orderStatus}</span>
+              <button
+                class="return-btn"
+                id="return-${orderId}-${itemId}"
+                ${orderStatus === "pending" ? "" : "disabled"}
+              >
                 Return Order
               </button>
             </div>
@@ -149,54 +60,36 @@ async function fetchOrders() {
         `;
       });
 
-      orderDiv.innerHTML = `
-        <h3>Order ID: ${orderId}</h3>
-        <ul>${itemsHTML}</ul>
-      `;
-
+      orderDiv.innerHTML = `<ul>${itemsHTML}</ul>`;
       ordersContainer.appendChild(orderDiv);
 
-      // listeners لكل زرار Return
-      items.forEach((_, index) => {
-        const btn = document.getElementById(`return-${orderId}-${index}`);
+      // listeners
+      itemsSnap.forEach((itemDoc) => {
+        const itemId = itemDoc.id;
+        const btn = document.getElementById(`return-${orderId}-${itemId}`);
+
         if (btn) {
-          btn.addEventListener("click", () => returnProduct(orderId, index));
+          btn.addEventListener("click", async () => {
+            try {
+              await updateDoc(doc(db, "orders", orderId), {
+                status: "pending to approval"
+              });
+
+              document.querySelectorAll(
+                `[id^="return-${orderId}-"]`
+              ).forEach(b => b.disabled = true);
+
+            } catch (err) {
+              console.error(err);
+            }
+          });
         }
       });
-    });
-  } catch (err) {
-    console.error("Error fetching orders:", err);
-    ordersContainer.innerHTML = "<p>Failed to load orders.</p>";
-  }
-}
-
-// ===== RETURN PRODUCT =====
-async function returnProduct(orderId, itemIndex) {
-  try {
-    const orderRef = doc(db, "orders", orderId);
-    const orderSnap = await getDoc(orderRef);
-
-    if (!orderSnap.exists()) {
-      alert("Order not found");
-      return;
     }
-
-    const orderData = orderSnap.data();
-    const items = orderData.items;
-
-    // تحديث حالة المنتج المطلوب
-    items[itemIndex].status = "pending to approval";
-
-    await updateDoc(orderRef, { items });
-
-    // تحديث UI
-    document.getElementById(`status-${orderId}-${itemIndex}`).textContent = "pending to approval";
-    document.getElementById(`return-${orderId}-${itemIndex}`).disabled = true;
   } catch (err) {
-    console.error("Return failed:", err);
-    alert("Failed to return product");
+    console.error(err);
+    ordersContainer.innerHTML = "<p>Error loading orders</p>";
   }
 }
 
-// ===== INIT =====
 fetchOrders();
