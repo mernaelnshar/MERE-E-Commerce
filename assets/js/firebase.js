@@ -91,11 +91,11 @@ export {
 //         const response = await fetch("https://fakestoreapi.com/products"); //api
 //         const products = await response.json();
 
-//         const limitedProducts = products.slice(0, 10);
+//         const limitedProducts = products.slice(0, 20);
         
 
 //         for (let p of limitedProducts) {
-//             const categoryId = p.category.replace(/\s+/g,"_");
+//             const categoryId = p.category;
 
 //             const categoryRef = doc(db,"categories",categoryId);
 //             const categorySnap = await getDoc(categoryRef);

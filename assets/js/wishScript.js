@@ -1,4 +1,4 @@
-import { auth, db, onAuthStateChanged, collection, getDocs , signOut } from "./firebase.js";
+import { auth, db, onAuthStateChanged, collection, getDocs ,deleteDoc , doc , signOut } from "./firebase.js";
 
 document.querySelector(".logout-btn").addEventListener("click", async () => {
     try {

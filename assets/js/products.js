@@ -188,7 +188,7 @@ function renderProducts(products,...pass) {
         addToWishList(product)
         iconwish.classList.remove("fa-regular");
         iconwish.classList.add("fa-solid");
-        iconwish.style.color = "rgb(178, 18, 157)";
+        iconwish.style.color = "red";
     })
 
     productDiv.appendChild(img);
