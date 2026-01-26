@@ -5,14 +5,13 @@ import {
   getDocs,
   doc,
   getDoc,
-  addDoc,
   setDoc,
   onAuthStateChanged,
   signOut,
   query,
   where,
   orderBy
-} from "./firebase/firebase.js";
+} from "./firebase.js";
 
 document.querySelector(".logout-btn").addEventListener("click", async () => {
     try {
@@ -308,6 +307,7 @@ async function addToWishList(proWish,proWishId) {
 
     if (wishSnap.exists()) {
       alert("This product is already in your wishlist");
+      addToWishBtn.style.backgroundColor='red'
       return;
     }
 
@@ -319,7 +319,7 @@ async function addToWishList(proWish,proWishId) {
     });
 
     alert("Added to wishlist successfully");
-    addToWishBtn.style.backgroundColor='rgb(178, 18, 157)'
+    addToWishBtn.style.backgroundColor='red'
 
 }
 

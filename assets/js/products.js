@@ -151,7 +151,7 @@ function renderProducts(products,...pass) {
     reviewData?.count || 0
     );
     // console.log(reviewData.avg )
-
+    console.log(product.stock)
     // add to cart
     if(product.stock>0){
         var addToCartDiv = document.createElement("div");
