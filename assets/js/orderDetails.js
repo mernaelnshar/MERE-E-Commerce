@@ -1,4 +1,4 @@
-import { db, collection, getDocs, updateDoc, doc , signOut} from "./firebase.js";
+import { db, collection, getDocs, updateDoc, doc , getDoc , signOut} from "./firebase.js";
 
 document.querySelector(".logout-btn").addEventListener("click", async () => {
     try {
@@ -18,6 +18,24 @@ const filterSelect = document.getElementById("statusFilter");
 let currentOrderId = null;
 let currentAction = null;
 
+async function getUserName(userid) {
+    try{
+        const userRef = doc(db,"users", userid);
+        const userSnap = await getDoc(userRef);
+        if(userSnap.exists()){
+        return userSnap.data().fullName;
+        }
+        else{
+        return "Unknown User";
+        }
+    }
+    catch(error){
+        console.log(error.message);
+    }
+    
+}
+
+
 async function loadOrders() {
     ordersBody.innerHTML = "";
     filterSelect.innerHTML = `<option value="all">All Orders</option>`;
@@ -36,21 +54,23 @@ async function loadOrders() {
             continue;
         }
         
-        itemsSnap.forEach((itemDoc) => {
+        // itemsSnap.forEach((itemDoc) =>
+            for(const itemDoc of itemsSnap.docs){
             const item = itemDoc.data();
             const row = document.createElement("tr");
-
+            const userName = await getUserName(order.userid);
             row.dataset.orderId = orderId;
 
             row.innerHTML = `
                 <td>#C-${orderId.slice(-4)}</td>
+                <td>${userName}</td>
                 <td>${item.title}</td>
                 <td>${item.price}</td>
                 <td>${item.quantity}</td>
             `;
 
             ordersBody.appendChild(row);
-        });
+        };
     }
 
     
