@@ -2,7 +2,6 @@ import {
   db,
   collection,
   getDocs,
-  getDoc,
   doc,
   updateDoc
 } from "./firebase.js";
@@ -24,7 +23,7 @@ async function fetchOrders() {
     for (const orderDoc of ordersSnap.docs) {
       const orderId = orderDoc.id;
       const orderData = orderDoc.data();
-      const orderStatus = orderData.status; // ✅ check هنا
+      const orderStatus = orderData.status || "pending"; // حالة الأوردر
 
       const orderDiv = document.createElement("div");
       orderDiv.className = "order-card";
@@ -46,14 +45,14 @@ async function fetchOrders() {
             <img src="${item.img}" class="item-image">
             <div class="item-info">
               <strong>${item.title}</strong>
-              <span>Price: ${item.price}</span>
+              <span>Price: $${item.price}</span>
               <span>Status: ${orderStatus}</span>
               <button
                 class="return-btn"
                 id="return-${orderId}-${itemId}"
-                ${orderStatus === "pending" ? "" : "disabled"}
+                ${orderStatus !== "pending" ? "disabled" : ""}
               >
-                Return Order
+                ${orderStatus === "pending" ? "Return Order" : "Return Requests"}
               </button>
             </div>
           </li>
@@ -63,7 +62,7 @@ async function fetchOrders() {
       orderDiv.innerHTML = `<ul>${itemsHTML}</ul>`;
       ordersContainer.appendChild(orderDiv);
 
-      // listeners
+      // إضافة event listeners للزرار
       itemsSnap.forEach((itemDoc) => {
         const itemId = itemDoc.id;
         const btn = document.getElementById(`return-${orderId}-${itemId}`);
@@ -71,16 +70,24 @@ async function fetchOrders() {
         if (btn) {
           btn.addEventListener("click", async () => {
             try {
+              // تحديث status الأوردر في Firebase
               await updateDoc(doc(db, "orders", orderId), {
                 status: "pending to approval"
               });
 
-              document.querySelectorAll(
-                `[id^="return-${orderId}-"]`
-              ).forEach(b => b.disabled = true);
+              // تغيير نص الزرار وتعطيله
+              btn.textContent = "Return Requests";
+              btn.disabled = true;
+
+              // لو عايزة كل أزرار الأوردر تتقفل مع بعض:
+              document.querySelectorAll(`[id^="return-${orderId}-"]`).forEach(b => {
+                b.textContent = "Return Requests";
+                b.disabled = true;
+              });
 
             } catch (err) {
-              console.error(err);
+              console.error("Failed to update order:", err);
+              alert("Failed to return order");
             }
           });
         }
