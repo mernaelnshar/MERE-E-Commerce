@@ -1,4 +1,4 @@
-import { db, collection, getDocs, updateDoc, doc  } from "./firebase.js";
+import { db, collection, getDocs, updateDoc, doc, getDoc  } from "./firebase.js";
 const ordersBody = document.getElementById("ordersBody");
 const filterSelect = document.getElementById("statusFilter");
 
@@ -17,6 +17,23 @@ const cards = {
     rejected: document.querySelector(".card:nth-child(4) p")
 };
 
+async function getUserName(userid) {
+    try{
+        const userRef = doc(db,"users", userid);
+        const userSnap = await getDoc(userRef);
+        if(userSnap.exists()){
+        return userSnap.data().fullName;
+        }
+        else{
+        return "Unknown User";
+        }
+    }
+    catch(error){
+        console.log(error.message);
+    }
+    
+}
+
 async function loadOrders() {
     ordersBody.innerHTML = "";
 
@@ -29,7 +46,8 @@ async function loadOrders() {
 
     const snapshot = await getDocs(collection(db, "orders"));
 
-    snapshot.forEach((docSnap) => {
+
+    for (const docSnap of snapshot.docs) {
 
         const order = docSnap.data();
         const id = docSnap.id;
@@ -55,20 +73,22 @@ async function loadOrders() {
         <button class="reject" data-id="${id}">Reject</button>
     `;
         }
-
+        const userName = await getUserName(order.userid);
+        
         const row = document.createElement("tr");
         row.dataset.status = formatStatus(order.status);
         row.dataset.id = id;
         row.innerHTML = `
         <td>#C-${id.slice(-4)}</td>
-        <td>${order.userId}</td>
-        <td>${new Date(order.createdAt).toLocaleString()}</td>
+        <td>${userName}</td>
+        <td>${order.createdAt.toDate().toLocaleString()}</td>
+        <td>${order.total} $</td>
         <td>${formatStatus(order.status)}</td>
         <td>${actions}</td>
     `;
 
         ordersBody.appendChild(row);
-    });
+    }
 
     cards.confirmed.innerText = counts.confirmed;
     cards.pending.innerText = counts.pending;
@@ -88,7 +108,7 @@ ordersBody.addEventListener("click", async (e) => {
     if (e.target.classList.contains("confirm")) {
         currentAction = "confirm";
         popupText.innerText = "Are you sure you want to confirm this order?";
-        popup.style.display = "flex"; // نفتح البوب اب
+        popup.style.display = "flex"; 
     }
 
     
