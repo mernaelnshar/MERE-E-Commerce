@@ -15,33 +15,32 @@ async function loadOrders() {
 
     const snapshot = await getDocs(collection(db, "orders"));
 
-    snapshot.forEach((docSnap) => {
+    for (const docSnap of snapshot.docs){
         const order = docSnap.data();
         const orderId = docSnap.id;
-
-        
         orderIds.add(orderId);
 
+        const itemsSnap = await getDocs(collection(db,"orders",orderId,"items"));
+        if(itemsSnap.empty){
+            continue;
+        }
         
-        if (!order.items || order.items.length === 0) return;
-
-        // نلف على كل item
-        order.items.forEach((item) => {
+        itemsSnap.forEach((itemDoc) => {
+            const item = itemDoc.data();
             const row = document.createElement("tr");
 
-            
             row.dataset.orderId = orderId;
 
             row.innerHTML = `
                 <td>#C-${orderId.slice(-4)}</td>
-                <td>${item.name}</td>
+                <td>${item.title}</td>
                 <td>${item.price}</td>
                 <td>${item.quantity}</td>
             `;
 
             ordersBody.appendChild(row);
         });
-    });
+    }
 
     
     orderIds.forEach((id) => {
