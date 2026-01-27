@@ -21,7 +21,18 @@ document.querySelector(".logout-btn").addEventListener("click", async () => {
     }
 });
 
-
+async function cartCountUpdate() {
+    // var user = requireAuth();
+    // if (!user) return;
+    const cart = JSON.parse(localStorage.getItem("Cart")) || [];
+    const userCartItems = cart.filter(item => item.userid === user.uid);
+    const totalCount = userCartItems.reduce((sum, item) => sum + item.Quantity, 0);
+    const countElement = document.querySelector(".count-cart");
+    if (countElement) {
+        countElement.textContent = totalCount;
+    }
+    
+}
 var productsRef = collection(db, "products");
 var categoriesRef = collection(db, "categories");
 var section = document.querySelector(".products");
@@ -231,6 +242,7 @@ async function addToCart(productId) {
     }
 
     localStorage.setItem("Cart", JSON.stringify(cart));
+    location.reload()
 }
 
 
@@ -255,6 +267,7 @@ async function addToWishList(proWish) {
     });
 
     alert("Added to wishlist successfully");
+    location.reload()
 }
 
 
@@ -341,10 +354,12 @@ onAuthStateChanged(auth, async (user) => {
   await getReviews();
   await getProducts();
   await getCategories();
+  await cartCountUpdate();
 
   if (!setupDone) {
     setupReset();
     setupPriceFilter();
+
     setupDone = true;
   }
 });

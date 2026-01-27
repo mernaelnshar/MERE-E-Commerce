@@ -55,7 +55,23 @@
             color: #0b7974; 
             transform: translateY(-2px);
         }
-
+        .nav-links .cart {
+            position: relative;
+        }
+        .count-cart {
+            position: absolute;
+            top: -14px;
+            right: 40px;
+            background-color: #0b7974; 
+            color: #fff;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 50%;
+            min-width: 20px;
+            min-height: 20px;
+            text-align: center;
+        }
         .logout-btn {
             background-color: transparent;
             border: 2px solid #777;
@@ -265,9 +281,10 @@
                             <i class="fa-solid fa-box-open"></i> Orders
                         </a>
                     </li>
-                    <li>
-                        <a href="shop.html">
+                    <li class="cart">
+                        <a  href="./shop.html">
                             <i class="fa-solid fa-cart-shopping"></i>Carts
+                            <div class="count-cart"></div>
                         </a>
                     </li>
                 </ul>
