@@ -320,7 +320,6 @@ function setupReset() {
     });
 
     // reset inputs
-    document.getElementById("Search").value = "";
     document.getElementById("minRange").value = "";
     document.getElementById("maxRange").value = "";
 
