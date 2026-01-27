@@ -1,4 +1,3 @@
-// ✅ Import db + Firestore functions من ملفك
 import {
   db,
   collection,
@@ -9,7 +8,6 @@ import {
 } from "./firebase.js";
 
 
-// ✅ زرار Login
 const goLoginBtn = document.getElementById("goLogin");
 if (goLoginBtn) {
   goLoginBtn.addEventListener("click", () => {
@@ -18,11 +16,9 @@ if (goLoginBtn) {
 }
 
 
-// ✅ مكان عرض الريفيوز
 const reviewsGrid = document.getElementById("reviewsGrid");
 
 
-// ✅ رسم النجوم
 function renderStars(rate = 5) {
   let starsHtml = "";
 
@@ -40,7 +36,6 @@ function renderStars(rate = 5) {
 }
 
 
-// ✅ كارت ريفيو
 function createReviewCard(r) {
   const name = r.username || "Unknown User";
   const comment = r.comment || "No comment";
@@ -67,17 +62,14 @@ function createReviewCard(r) {
 }
 
 
-// ✅ Load Reviews From Firestore
 async function loadReviewsFromFirebase() {
   if (!reviewsGrid) return;
 
   try {
     reviewsGrid.innerHTML = `<div class="loader">Loading reviews...</div>`;
 
-    // ✅ collection name
     const reviewsRef = collection(db, "reviews");
 
-    // ✅ عرض آخر 3 Reviews فقط
     const q = query(reviewsRef, orderBy("createdAt", "desc"), limit(3));
 
     const snapshot = await getDocs(q);

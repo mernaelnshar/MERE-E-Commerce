@@ -10,7 +10,6 @@ import {
 } from "./firebase.js"; 
 
 
-
 document.querySelector(".logout-btn").addEventListener("click", async () => {
     try {
         await signOut(auth); 
@@ -49,48 +48,37 @@ async function getCategories() {
   snapshot.forEach((docItem) => {
     var cat = docItem.data(); 
 
-    // create <a>
     var catLink = document.createElement("a");
     catLink.className = "category";
     catLink.href = "#";
     catLink.dataset.category = cat.name;
 
-    //  left div
     var leftDiv = document.createElement("div");
     leftDiv.className = "left";
 
-    //  icon
     var iconSpan = document.createElement("span");
     var iconImg = document.createElement("img");
     iconImg.src = cat.icon || "assets/images/icons/armchair.png";
     iconImg.alt = cat.name;
     iconSpan.appendChild(iconImg);
 
-    //  name
     var nameSpan = document.createElement("span");
     nameSpan.textContent = cat.name;
 
     leftDiv.appendChild(iconSpan);
     leftDiv.appendChild(nameSpan);
 
-
-
-    //  append to link
     catLink.appendChild(leftDiv);
 
-    //  append category inside categoriesDiv
     categoriesDiv.appendChild(catLink);
 
-    //  click event filter
     catLink.addEventListener("click", function (e) {
       e.preventDefault();
 
-      // remove active from all
       document.querySelectorAll(".category").forEach((c) => {
         c.classList.remove("activeCategory");
       });
 
-      // add active to clicked
       catLink.classList.add("activeCategory");
 
       applyFilters();
@@ -142,17 +130,13 @@ function renderProducts(products,...pass) {
 
     var desc = document.createElement("p");
     desc.textContent = product.description;
-    // STAR RATING  
-    // console.log(reviewData?.avg )
+    
     var reviewData = reviewsMap[product.id];
-    // console.log(reviewData?.avg,product.id)
     var ratingDiv = createStarRating(
     reviewData?.avg || 0,
     reviewData?.count || 0
     );
-    // console.log(reviewData.avg )
     console.log(product.stock)
-    // add to cart
     if(product.stock>0){
         var addToCartDiv = document.createElement("div");
         addToCartDiv.className = "addToCard";
@@ -174,7 +158,6 @@ function renderProducts(products,...pass) {
         });
       }
 
-    // wishlist
     var addToWishListDiv = document.createElement("div");
     addToWishListDiv.className = "addToWishList";
 
@@ -281,7 +264,6 @@ function applyFilters() {
   var minRange = parseFloat(document.getElementById("minRange").value) || 0;
   var maxRange = parseFloat(document.getElementById("maxRange").value) || Infinity;
 
- 
 
   var activeCategory = document.querySelector(".category.activeCategory");
   var selectedCategory = activeCategory ? activeCategory.dataset.category : "All";
@@ -300,12 +282,10 @@ function applyFilters() {
   renderProducts(filteredProducts,passfiltercat);
 }
 
-// filter by price button
 function setupPriceFilter() {
   var btnFilter = document.getElementById("filter");
 
   btnFilter.addEventListener("click", function () {
-    // debugger
     applyFilters();
   });
 }
@@ -314,16 +294,13 @@ function setupReset() {
   var resetBtn = document.querySelector(".reset input[type='reset']");
 
   resetBtn.addEventListener("click", function () {
-    // remove active category
     document.querySelectorAll(".category").forEach((c) => {
       c.classList.remove("activeCategory");
     });
 
-    // reset inputs
     document.getElementById("minRange").value = "";
     document.getElementById("maxRange").value = "";
 
-    // show all products
     filteredProducts = [...allProducts];
     renderProducts(filteredProducts);
   });
@@ -336,7 +313,6 @@ function createStarRating(avg = 0, count = 0) {
 
   var fullStars = Math.floor(avg);
   var hasHalf = avg - fullStars >= 0.5;
-    // debugger
   for (var i = 1; i <= 5; i++) {
     var star = document.createElement("i");
 

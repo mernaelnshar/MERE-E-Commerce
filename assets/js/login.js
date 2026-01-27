@@ -19,7 +19,6 @@ const db = getFirestore(app);
 const adminRegex = /^(?=.*\d)[a-zA-Z0-9._%+-]+@eud\.com$/;
 const customerRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
-// ✅ Password Regex: حروف + أرقام + رموز عادي (8 أو أكثر)
 const passwordRegex = /^[A-Za-z\d@$!%*?&._#^+=-]{8,}$/;
 
 const loginTab = document.getElementById("loginTab");
@@ -108,10 +107,8 @@ authForm.addEventListener("submit", async (e) => {
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
 
-  // ✅ تعديل التحقق من الباسورد: طول + Regex (حروف/أرقام/رموز)
   const passValid = passwordRegex.test(pass);
 
-  // ✅ تعديل شرط الاسم: مايقبلش أقل من 4 حروف
   const nameValid = mode === "login" ? true : name.length >= 4;
 
   const confirmValid = mode === "login" ? true : (confirm === pass && passwordRegex.test(confirm));

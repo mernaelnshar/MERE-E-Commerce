@@ -11,10 +11,8 @@ document.querySelector(".logout-btn").addEventListener("click", async () => {
     }
 });
 
-// ===== SELECT CONTAINER =====
 const wishlistContainer = document.getElementById("wishlistContainer");
 
-// ===== FETCH WISHLIST =====
 async function fetchWishlist(userId) {
   wishlistContainer.innerHTML = "<p>Loading wishlist...</p>";
 
@@ -47,7 +45,6 @@ async function fetchWishlist(userId) {
         </div>
       `;
 
-      // ===== REMOVE BUTTON =====
       card.querySelector(".remove-btn").addEventListener("click", async () => {
         await deleteDoc(
           doc(db, "wishlists", userId, "ProductWishlist", docSnap.id),
@@ -55,7 +52,6 @@ async function fetchWishlist(userId) {
 
         card.remove();
 
-        // لو فاضية بعد الحذف
         if (!productsGrid.children.length) {
           wishlistContainer.innerHTML = "<p>Your wishlist is empty.</p>";
         }
@@ -72,7 +68,6 @@ async function fetchWishlist(userId) {
   }
 }
 
-// ===== AUTH LISTENER =====
 onAuthStateChanged(auth, (user) => {
   if (user) {
     fetchWishlist(user.uid);
@@ -81,6 +76,3 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// ===== INIT =====
-
-// fetchWishlist("1"); // ضع هنا الـ userId

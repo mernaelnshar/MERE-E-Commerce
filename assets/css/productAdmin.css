@@ -1,8 +1,4 @@
-/* =========================
-   Products Page Styles
-========================= */
 
-/* Filter */
 .filter {
     margin: 20px 0;
     display: flex;
@@ -27,9 +23,6 @@
 }
 
 
-/* =========================
-   Products Table
-========================= */
 .products-table {
     width: 100%;
     background: #ffffff;
@@ -64,9 +57,6 @@
 }
 
 
-/* =========================
-   Actions Buttons
-========================= */
 .actions {
     display: flex;
     justify-content: center;
@@ -95,9 +85,6 @@
 }
 
 
-/* =========================
-    Add Product Button
-========================= */
 #addProductBtn {
     padding: 10px 15px;
     background: #0b7974;
@@ -113,9 +100,6 @@
 }
 
 
-/* =========================
-Modal
-========================= */
 .modal {
     display: none; 
     position: fixed;
@@ -161,16 +145,12 @@ Modal
 }
 
 
-/* Errors */
 .error {
     color: red;
     font-size: 12px;
 }
 
 
-/* =========================
-   Modal Actions
-========================= */
 .modal-actions {
     display: flex;
     gap: 10px;

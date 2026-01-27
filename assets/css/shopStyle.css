@@ -17,7 +17,6 @@ body {
   background: var(--bg-light);
   color: #111;
 }
-/* Navbar */
 .navbar {
   background-color: #ffffff;
   height: 80px;
@@ -261,13 +260,11 @@ body {
   border-radius: 50%;
 }
 
-/* BREADCRUMB */
 .breadcrumb {
   padding: 25px 40px;
   color: #777;
 }
 
-/* MAIN */
 .container {
   display: flex;
   gap: 30px;
@@ -375,25 +372,5 @@ body {
   color: #777;
 }
 
-/* RECOMMEND */
-/* .recommend {
-  padding: 60px 40px;
-}
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 25px;
-}
-
-.card {
-  background: #fff;
-  border-radius: 18px;
-  padding: 15px;
-}
-
-.card img {
-  width: 100%;
-  border-radius: 14px;
-} */
 

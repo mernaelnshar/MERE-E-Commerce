@@ -33,9 +33,7 @@ const emptyCartMsg = document.getElementById("emptyCart");
 
 let currentUser = null;
 
-/* =========================
-   GET CART (نفس المشروع)
-========================= */
+
 function getCart() {
   return JSON.parse(localStorage.getItem("Cart")) || [];
 }
@@ -44,9 +42,7 @@ function saveCart(cart) {
   localStorage.setItem("Cart", JSON.stringify(cart));
 }
 
-/* =========================
-   RENDER CART
-========================= */
+
 async function renderCart() {
     var user = requireAuth();
     if (!user) return;
@@ -99,9 +95,7 @@ async function renderCart() {
   updateSummary(subtotal);
 }
 
-/* =========================
-   SUMMARY
-========================= */
+
 function updateSummary(subtotal) {
   const tax = subtotal * 0.08;
   const total = subtotal + tax;
@@ -111,9 +105,7 @@ function updateSummary(subtotal) {
   document.getElementById("total").textContent = `$${total.toFixed(2)}`;
 }
 
-/* =========================
-   CART ACTIONS
-========================= */
+
 document.addEventListener("click", (e) => {
     var user = requireAuth();
     if (!user) return;
@@ -145,9 +137,7 @@ document.addEventListener("click", (e) => {
   renderCart();
 });
 
-/* =========================
-   CHECKOUT
-========================= */
+
 document.getElementById("checkoutBtn").addEventListener("click", async () => {
     var user = requireAuth();
     if (!user) return;
@@ -211,9 +201,6 @@ document.getElementById("checkoutBtn").addEventListener("click", async () => {
 });
 
 
-/* =========================
-   AUTH INIT
-========================= */
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     alert("Please login first");

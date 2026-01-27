@@ -4,7 +4,6 @@
     grid-template-rows: auto auto 1fr auto;
 }
 
-/* ================= Breadcrumb ================= */
 .bridcumb {
     width: 100%;
     display: flex;
@@ -14,7 +13,6 @@
     padding: 20px 40px;
     gap: 20px;
     flex-wrap: wrap;
-    /* عشان يبقى responsive */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -38,7 +36,6 @@
     font-size: 14px;
     color: #555;
     flex-wrap: wrap;
-    /* عشان النص الطويل يلف */
 }
 
 .pass a {
@@ -59,14 +56,12 @@
 
 .pass span#passlink {
     max-width: 200px;
-    /* بدل width ثابت */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: #333;
 }
 
-/* ================= Sort ================= */
 .sortarea {
     display: flex;
     gap: 10px;
@@ -77,7 +72,6 @@
     border-radius: 9999px;
 }
 
-/* ================= Layout ================= */
 .content {
     display: grid;
     grid-template-columns: 260px 1fr;
@@ -85,7 +79,6 @@
     padding: 20px;
 }
 
-/* ================= Products Section ================= */
 section {
     background: #fafafa;
     display: grid;
@@ -94,7 +87,6 @@ section {
     padding: 20px;
 }
 
-/* ================= Product Card ================= */
 .product {
     background-color: #e5e7eb;
     border-radius: 16px;
@@ -138,7 +130,6 @@ section {
     color: chocolate;
 }
 
-/* ================= Add to Cart ================= */
 .addToCard {
     margin: 16px;
     padding: 10px;
@@ -155,7 +146,6 @@ section {
     font-weight: 600;
 }
 
-/* ================= Wishlist ================= */
 .addToWishList {
     position: absolute;
     top: 10px;
@@ -174,7 +164,6 @@ section {
     cursor: pointer;
 }
 
-/* ================= Rating ================= */
 .star-rating {
     color: #f5b301;
     margin: 8px 16px;
@@ -186,7 +175,6 @@ section {
     font-size: 12px;
 }
 
-/* ================= Sidebar ================= */
 aside {
     background: white;
     border-radius: 12px;
@@ -196,7 +184,6 @@ aside {
     gap: 20px;
 }
 
-/* ================= Categories ================= */
 .category {
     width: 100%;
     height: 50px;
@@ -212,27 +199,26 @@ aside {
     transition: all 0.3s ease;
 }
 
-/* hover */
+
 .category:hover {
     background-color: #0b7974;
     color: #fff;
     box-shadow: 0 8px 20px rgba(11, 121, 116, 0.35);
 }
 
-/* active category */
+
 .category.activeCategory {
     background-color: #111;
     color: #fff;
 }
 
-/* left content */
 .category .left {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-/* icon */
+
 .category .left img {
     width: 22px;
     height: 22px;
@@ -242,26 +228,22 @@ aside {
     transition: all 0.3s ease;
 }
 
-/* icon hover */
 .category:hover .left img {
     background-color: #fff;
     transform: scale(1.1);
 }
 
-/* text */
 .category .left span:last-child {
     font-size: 14px;
     font-weight: 600;
     transition: letter-spacing 0.3s ease;
 }
 
-/* text hover */
+
 .category:hover .left span:last-child {
     letter-spacing: 0.5px;
 }
 
-
-/* ================= Price Filter ================= */
 .price-filter {
     display: flex;
     flex-direction: column;
@@ -284,7 +266,6 @@ aside {
     margin: 10px;
 }
 
-/* ================= Buttons ================= */
 .reset input,
 .filter-price #filter {
     background-color: #0b7974;
@@ -301,7 +282,6 @@ aside {
     background-color: #05716c;
 }
 
-/* ================= Responsive ================= */
 @media (max-width: 992px) {
     .content {
         grid-template-columns: 1fr;

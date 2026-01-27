@@ -54,7 +54,6 @@ async function loadOrders() {
             continue;
         }
         
-        // itemsSnap.forEach((itemDoc) =>
             for(const itemDoc of itemsSnap.docs){
             const item = itemDoc.data();
             const row = document.createElement("tr");

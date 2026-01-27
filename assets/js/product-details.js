@@ -55,13 +55,11 @@ async function getProductDetails() {
 
         
         var product = snap.data();
-        // breadcrumb
         var catNameEl   = document.querySelector("#catName");
         catNameEl.textContent = `${product.category}`;
         var proNameEl   = document.querySelector("#proName");
         proNameEl.textContent = `${product.title}`;
         
-        // main product section
         var productImgEl   = document.querySelector(".main-image img");
         productImgEl.src = `${product.imageURL}`;
         var productTitleEl = document.querySelector(".details h3");
@@ -92,21 +90,17 @@ async function getProductDetails() {
             addToCartBtn.style.display='none'
             }
 
-        // buttons
 
         addToWishBtn.addEventListener('click',function(){
             addToWishList(product,snap.id)
         })
-        // description
-        var descTextEl     = document.querySelector(".description p");
+        var descTextEl = document.querySelector(".description p");
         descTextEl.textContent = `${product.description}`;
 
-        // rating / reviews 
         var ratingDiv=createStarRating(reviewsMap.avg,reviewsMap.count)
         var rate = document.querySelector(".details .rate")
           rate.appendChild(ratingDiv)
 
-        // customer feedback
         var commentTextarea = document.querySelector("#comment");
         var submitReviewBtn = document.querySelector(".submit-a a");
         submitReviewBtn.addEventListener('click',function(){
@@ -117,10 +111,6 @@ async function getProductDetails() {
 
 
           await renderReviews(snap.id);
-  
-
-    
-
 
 }
 
@@ -295,11 +285,8 @@ async function createreview(comment, proId, rate) {
 
 
 async function addToWishList(proWish,proWishId) {
-
-
       var user = requireAuth();
       if (!user) return;
-
 
     var wishRef = doc(db,"wishlists",user.uid,"ProductWishlist",proWishId);
 
