@@ -52,6 +52,15 @@
     background: #095d5b;
 }
 
+.acceptReturn {
+    background: #1aa202;
+    color: #fff;
+}
+
+.acceptReturn:hover {
+    background: #0f5f01;
+}
+
 .reject {
     background: darkred;
     color: #fff;

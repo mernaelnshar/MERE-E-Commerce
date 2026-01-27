@@ -82,7 +82,7 @@ async function loadOrders() {
 
         if (order.status === "return_requests") {
             actions = `
-        <button class="confirm" data-id="${id}">Accept Return</button>
+        <button class="acceptReturn" data-id="${id}">Accept Return</button>
         <button class="reject" data-id="${id}">Reject</button>
     `;
         }
@@ -123,6 +123,12 @@ ordersBody.addEventListener("click", async (e) => {
         popupText.innerText = "Are you sure you want to confirm this order?";
         popup.style.display = "flex"; 
     }
+    
+    if (e.target.classList.contains("acceptReturn")) {
+        currentAction = "acceptReturn";
+        popupText.innerText = "Are you sure you want to accept Return this order?";
+        popup.style.display = "flex"; 
+    }
 
     
     if (e.target.classList.contains("reject")) {
@@ -135,6 +141,12 @@ ordersBody.addEventListener("click", async (e) => {
 
 okBtn.addEventListener("click", async () => {
     if (!currentOrderId) return;
+
+    if (currentAction === "acceptReturn") {
+        await updateDoc(doc(db, "orders", currentOrderId), {
+            status: "acceptReturn"
+        });
+    }
 
     if (currentAction === "confirm") {
         await updateDoc(doc(db, "orders", currentOrderId), {
@@ -167,6 +179,7 @@ function formatStatus(status) {
         case "confirmed": return "Confirmed";
         case "return_requests": return "Return Requests";
         case "rejected": return "Rejected";
+        case "acceptReturn": return "Accept Return";
         default: return status;
     }
 }
